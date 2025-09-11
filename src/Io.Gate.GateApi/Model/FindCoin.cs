@@ -33,25 +33,16 @@ namespace Io.Gate.GateApi.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="FindCoin" /> class.
         /// </summary>
-        /// <param name="coin">Currency.</param>
-        /// <param name="cointype">Token Type: swap-Voucher, lock-Locked.</param>
-        public FindCoin(string coin = default(string), string cointype = default(string))
+        /// <param name="cointype">Currency type: swap - voucher; lock - locked position; debt - US Treasury bond..</param>
+        public FindCoin(string cointype = default(string))
         {
-            this.Coin = coin;
             this.Cointype = cointype;
         }
 
         /// <summary>
-        /// Currency
+        /// Currency type: swap - voucher; lock - locked position; debt - US Treasury bond.
         /// </summary>
-        /// <value>Currency</value>
-        [DataMember(Name="coin")]
-        public string Coin { get; set; }
-
-        /// <summary>
-        /// Token Type: swap-Voucher, lock-Locked
-        /// </summary>
-        /// <value>Token Type: swap-Voucher, lock-Locked</value>
+        /// <value>Currency type: swap - voucher; lock - locked position; debt - US Treasury bond.</value>
         [DataMember(Name="cointype")]
         public string Cointype { get; set; }
 
@@ -63,7 +54,6 @@ namespace Io.Gate.GateApi.Model
         {
             var sb = new StringBuilder();
             sb.Append("class FindCoin {\n");
-            sb.Append("  Coin: ").Append(Coin).Append("\n");
             sb.Append("  Cointype: ").Append(Cointype).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
@@ -100,11 +90,6 @@ namespace Io.Gate.GateApi.Model
 
             return 
                 (
-                    this.Coin == input.Coin ||
-                    (this.Coin != null &&
-                    this.Coin.Equals(input.Coin))
-                ) && 
-                (
                     this.Cointype == input.Cointype ||
                     (this.Cointype != null &&
                     this.Cointype.Equals(input.Cointype))
@@ -120,8 +105,6 @@ namespace Io.Gate.GateApi.Model
             unchecked // Overflow is fine, just wrap
             {
                 int hashCode = 41;
-                if (this.Coin != null)
-                    hashCode = hashCode * 59 + this.Coin.GetHashCode();
                 if (this.Cointype != null)
                     hashCode = hashCode * 59 + this.Cointype.GetHashCode();
                 return hashCode;

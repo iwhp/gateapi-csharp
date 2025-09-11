@@ -362,7 +362,7 @@ No authorization required
 
 <a name="listfuturescandlesticks"></a>
 # **ListFuturesCandlesticks**
-> List&lt;FuturesCandlestick&gt; ListFuturesCandlesticks (string settle, string contract, long? from = null, long? to = null, int? limit = null, string interval = null)
+> List&lt;FuturesCandlestick&gt; ListFuturesCandlesticks (string settle, string contract, long? from = null, long? to = null, int? limit = null, string interval = null, string timezone = null)
 
 Futures market K-line chart
 
@@ -391,11 +391,12 @@ namespace Example
             var to = 1546935600;  // long? | Specify the end time of the K-line chart, defaults to current time if not specified, note that the time format is Unix timestamp with second precision (optional) 
             var limit = 100;  // int? | Maximum number of recent data points to return. `limit` conflicts with `from` and `to`. If either `from` or `to` is specified, request will be rejected. (optional)  (default to 100)
             var interval = "5m";  // string | Interval time between data points. Note that `1w` means natural week(Mon-Sun), while `7d` means every 7d since unix 0. 30d represents a natural month, not 30 days (optional)  (default to 5m)
+            var timezone = "\"utc0\"";  // string | Time zone: all/utc0/utc8, default utc0 (optional)  (default to "utc0")
 
             try
             {
                 // Futures market K-line chart
-                List<FuturesCandlestick> result = apiInstance.ListFuturesCandlesticks(settle, contract, from, to, limit, interval);
+                List<FuturesCandlestick> result = apiInstance.ListFuturesCandlesticks(settle, contract, from, to, limit, interval, timezone);
                 Debug.WriteLine(result);
             }
             catch (GateApiException e)
@@ -420,6 +421,7 @@ Name | Type | Description  | Notes
  **to** | **long?**| Specify the end time of the K-line chart, defaults to current time if not specified, note that the time format is Unix timestamp with second precision | [optional] 
  **limit** | **int?**| Maximum number of recent data points to return. &#x60;limit&#x60; conflicts with &#x60;from&#x60; and &#x60;to&#x60;. If either &#x60;from&#x60; or &#x60;to&#x60; is specified, request will be rejected. | [optional] [default to 100]
  **interval** | **string**| Interval time between data points. Note that &#x60;1w&#x60; means natural week(Mon-Sun), while &#x60;7d&#x60; means every 7d since unix 0. 30d represents a natural month, not 30 days | [optional] [default to 5m]
+ **timezone** | **string**| Time zone: all/utc0/utc8, default utc0 | [optional] [default to &quot;utc0&quot;]
 
 ### Return type
 
@@ -895,7 +897,7 @@ No authorization required
 
 Query liquidation order history
 
-The time interval between from and to is maximum 3600. Some private fields are not returned by public interfaces, refer to field descriptions for detailsThe time interval between from and to is maximum 3600. Some private fields are not returned by public interfaces, refer to field descriptions for interfaces, refer to field descriptions for details
+The time interval between from and to is maximum 3600. Some private fields are not returned by public interfaces, refer to field descriptions for details
 
 ### Example
 ```csharp
@@ -974,7 +976,7 @@ No authorization required
 
 Query risk limit tiers
 
-When the 'contract' parameter is not passed, the default is to query the risk limits for the top 100 markets.'Limit' and 'offset' correspond to pagination queries at the market level, not to the length of the returned array. This only takes effect empty.
+When the 'contract' parameter is not passed, the default is to query the risk limits for the top 100 markets. 'Limit' and 'offset' correspond to pagination queries at the market level, not to the length of the returned array. This only takes effect when the contract parameter is empty.
 
 ### Example
 ```csharp
@@ -1149,7 +1151,7 @@ namespace Example
             var offset = 0;  // int? | List offset, starting from 0 (optional)  (default to 0)
             var from = 1547706332;  // long? | Start timestamp  Specify start time, time format is Unix timestamp. If not specified, it defaults to (the data start time of the time range actually returned by to and limit) (optional) 
             var to = 1547706332;  // long? | Termination Timestamp  Specify the end time. If not specified, it defaults to the current time, and the time format is a Unix timestamp (optional) 
-            var type = "dnw";  // string | Changing Type：  - dnw: Deposit & Withdraw - pnl: Profit & Loss by reducing position - fee: Trading fee - refr: Referrer rebate - fund: Funding - point_dnw: point_fee: POINT Trading fee - point_refr: POINT Referrer rebate - bonus_offset: bouns deduction (optional) 
+            var type = "dnw";  // string | Change types:  - dnw: Deposit and withdrawal - pnl: Profit and loss from position reduction - fee: Trading fees - refr: Referrer rebates - fund: Funding fees - point_dnw: Point card deposit and withdrawal - point_fee: Point card trading fees - point_refr: Point card referrer rebates - bonus_offset: Trial fund deduction (optional) 
 
             try
             {
@@ -1179,7 +1181,7 @@ Name | Type | Description  | Notes
  **offset** | **int?**| List offset, starting from 0 | [optional] [default to 0]
  **from** | **long?**| Start timestamp  Specify start time, time format is Unix timestamp. If not specified, it defaults to (the data start time of the time range actually returned by to and limit) | [optional] 
  **to** | **long?**| Termination Timestamp  Specify the end time. If not specified, it defaults to the current time, and the time format is a Unix timestamp | [optional] 
- **type** | **string**| Changing Type：  - dnw: Deposit &amp; Withdraw - pnl: Profit &amp; Loss by reducing position - fee: Trading fee - refr: Referrer rebate - fund: Funding - point_dnw: point_fee: POINT Trading fee - point_refr: POINT Referrer rebate - bonus_offset: bouns deduction | [optional] 
+ **type** | **string**| Change types:  - dnw: Deposit and withdrawal - pnl: Profit and loss from position reduction - fee: Trading fees - refr: Referrer rebates - fund: Funding fees - point_dnw: Point card deposit and withdrawal - point_fee: Point card trading fees - point_refr: Point card referrer rebates - bonus_offset: Trial fund deduction | [optional] 
 
 ### Return type
 
@@ -1428,7 +1430,7 @@ Name | Type | Description  | Notes
 
 <a name="updatepositionleverage"></a>
 # **UpdatePositionLeverage**
-> Position UpdatePositionLeverage (string settle, string contract, string leverage, string crossLeverageLimit = null)
+> Position UpdatePositionLeverage (string settle, string contract, string leverage, string crossLeverageLimit = null, int? pid = null)
 
 Update position leverage
 
@@ -1455,11 +1457,12 @@ namespace Example
             var contract = "BTC_USDT";  // string | Futures contract
             var leverage = "10";  // string | New position leverage
             var crossLeverageLimit = "10";  // string | Cross margin leverage (valid only when `leverage` is 0) (optional) 
+            var pid = 1;  // int? | Product ID (optional) 
 
             try
             {
                 // Update position leverage
-                Position result = apiInstance.UpdatePositionLeverage(settle, contract, leverage, crossLeverageLimit);
+                Position result = apiInstance.UpdatePositionLeverage(settle, contract, leverage, crossLeverageLimit, pid);
                 Debug.WriteLine(result);
             }
             catch (GateApiException e)
@@ -1482,6 +1485,7 @@ Name | Type | Description  | Notes
  **contract** | **string**| Futures contract | 
  **leverage** | **string**| New position leverage | 
  **crossLeverageLimit** | **string**| Cross margin leverage (valid only when &#x60;leverage&#x60; is 0) | [optional] 
+ **pid** | **int?**| Product ID | [optional] 
 
 ### Return type
 
@@ -2133,7 +2137,7 @@ namespace Example
             var contract = "BTC_USDT";  // string | Futures contract, return related data only if specified (optional) 
             var limit = 100;  // int? | Maximum number of records returned in a single list (optional)  (default to 100)
             var offset = 0;  // int? | List offset, starting from 0 (optional)  (default to 0)
-            var lastId = "12345";  // string | Specify the currency name to query in batches, and support up to 100 pass parameters at a time (optional) 
+            var lastId = "12345";  // string | Use the ID of the last record in the previous list as the starting point for the next list  Operations based on custom IDs can only be checked when orders are pending. After orders are completed (filled/cancelled), they can be checked within 1 hour after completion. After expiration, only order IDs can be used (optional) 
 
             try
             {
@@ -2162,7 +2166,7 @@ Name | Type | Description  | Notes
  **contract** | **string**| Futures contract, return related data only if specified | [optional] 
  **limit** | **int?**| Maximum number of records returned in a single list | [optional] [default to 100]
  **offset** | **int?**| List offset, starting from 0 | [optional] [default to 0]
- **lastId** | **string**| Specify the currency name to query in batches, and support up to 100 pass parameters at a time | [optional] 
+ **lastId** | **string**| Use the ID of the last record in the previous list as the starting point for the next list  Operations based on custom IDs can only be checked when orders are pending. After orders are completed (filled/cancelled), they can be checked within 1 hour after completion. After expiration, only order IDs can be used | [optional] 
 
 ### Return type
 
@@ -2263,7 +2267,7 @@ Name | Type | Description  | Notes
 
 <a name="cancelfuturesorders"></a>
 # **CancelFuturesOrders**
-> List&lt;FuturesOrder&gt; CancelFuturesOrders (string settle, string contract, string xGateExptime = null, string side = null)
+> List&lt;FuturesOrder&gt; CancelFuturesOrders (string settle, string contract, string xGateExptime = null, string side = null, bool? excludeReduceOnly = null, string text = null)
 
 Cancel all orders with 'open' status
 
@@ -2291,12 +2295,14 @@ namespace Example
             var settle = "usdt";  // string | Settle currency
             var contract = "BTC_USDT";  // string | Futures contract
             var xGateExptime = "1689560679123";  // string | Specify the expiration time (milliseconds); if the GATE receives the request time greater than the expiration time, the request will be rejected (optional) 
-            var side = "ask";  // string | Specify all buy orders or all sell orders, both are included if not specified. Set to bid, set to ask to cancel all sell ordersspecified. Set to bid, set to ask to cancel all sell ordersspecified. Set to bid, set to ask to cancel all sell orders (optional) 
+            var side = "ask";  // string | Specify all buy orders or all sell orders, both are included if not specified. Set to bid to cancel all buy orders, set to ask to cancel all sell orders (optional) 
+            var excludeReduceOnly = false;  // bool? | Whether to exclude reduce-only orders (optional)  (default to false)
+            var text = "cancel by user";  // string | Remark for order cancellation (optional) 
 
             try
             {
                 // Cancel all orders with 'open' status
-                List<FuturesOrder> result = apiInstance.CancelFuturesOrders(settle, contract, xGateExptime, side);
+                List<FuturesOrder> result = apiInstance.CancelFuturesOrders(settle, contract, xGateExptime, side, excludeReduceOnly, text);
                 Debug.WriteLine(result);
             }
             catch (GateApiException e)
@@ -2318,7 +2324,9 @@ Name | Type | Description  | Notes
  **settle** | **string**| Settle currency | 
  **contract** | **string**| Futures contract | 
  **xGateExptime** | **string**| Specify the expiration time (milliseconds); if the GATE receives the request time greater than the expiration time, the request will be rejected | [optional] 
- **side** | **string**| Specify all buy orders or all sell orders, both are included if not specified. Set to bid, set to ask to cancel all sell ordersspecified. Set to bid, set to ask to cancel all sell ordersspecified. Set to bid, set to ask to cancel all sell orders | [optional] 
+ **side** | **string**| Specify all buy orders or all sell orders, both are included if not specified. Set to bid to cancel all buy orders, set to ask to cancel all sell orders | [optional] 
+ **excludeReduceOnly** | **bool?**| Whether to exclude reduce-only orders | [optional] [default to false]
+ **text** | **string**| Remark for order cancellation | [optional] 
 
 ### Return type
 

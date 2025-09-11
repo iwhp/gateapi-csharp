@@ -249,7 +249,9 @@ namespace Io.Gate.GateApi.Model
         /// <param name="text">Custom order information. If not empty, must follow the rules below:  1. Prefixed with &#x60;t-&#x60; 2. No longer than 28 bytes without &#x60;t-&#x60; prefix 3. Can only include 0-9, A-Z, a-z, underscore(_), hyphen(-) or dot(.)  In addition to user-defined information, the following are internal reserved fields that identify the order source:  - web: Web - api: API call - app: Mobile app - auto_deleveraging: Automatic deleveraging - liquidation: Forced liquidation of positions under the old classic mode - liq-xxx: a. Forced liquidation of positions under the new classic mode, including isolated margin, one-way cross margin, and non-hedged positions under two-way cross margin. b. Forced liquidation of isolated positions under the unified account single-currency margin mode - hedge-liq-xxx: Forced liquidation of hedged positions under the new classic mode two-way cross margin, i.e., simultaneously closing long and short positions - pm_liquidate: Forced liquidation under unified account multi-currency margin mode - comb_margin_liquidate: Forced liquidation under unified account portfolio margin mode - scm_liquidate: Forced liquidation of positions under unified account single-currency margin mode - insurance: Insurance.</param>
         /// <param name="autoSize">Set side to close dual-mode position. &#x60;close_long&#x60; closes the long side; while &#x60;close_short&#x60; the short one. Note &#x60;size&#x60; also needs to be set to 0.</param>
         /// <param name="stpAct">Self-Trading Prevention Action. Users can use this field to set self-trade prevention strategies  1. After users join the &#x60;STP Group&#x60;, they can pass &#x60;stp_act&#x60; to limit the user&#39;s self-trade prevention strategy. If &#x60;stp_act&#x60; is not passed, the default is &#x60;cn&#x60; strategy. 2. When the user does not join the &#x60;STP group&#x60;, an error will be returned when passing the &#x60;stp_act&#x60; parameter. 3. If the user did not use &#x60;stp_act&#x60; when placing the order, &#x60;stp_act&#x60; will return &#39;-&#39;  - cn: Cancel newest, cancel new orders and keep old ones - co: Cancel oldest, cancel old orders and keep new ones - cb: Cancel both, both old and new orders will be cancelled.</param>
-        public FuturesOrder(string contract = default(string), long size = default(long), long iceberg = default(long), string price = default(string), bool close = false, bool reduceOnly = false, TifEnum? tif = TifEnum.Gtc, string text = default(string), AutoSizeEnum? autoSize = default(AutoSizeEnum?), StpActEnum? stpAct = default(StpActEnum?))
+        /// <param name="limitVip">Counterparty user&#39;s VIP level for limit order fills. Current order will only match with orders whose VIP level is less than or equal to the specified level. Only 11~16 are supported; default is 0.</param>
+        /// <param name="pid">Position ID.</param>
+        public FuturesOrder(string contract = default(string), long size = default(long), long iceberg = default(long), string price = default(string), bool close = false, bool reduceOnly = false, TifEnum? tif = TifEnum.Gtc, string text = default(string), AutoSizeEnum? autoSize = default(AutoSizeEnum?), StpActEnum? stpAct = default(StpActEnum?), long limitVip = default(long), long pid = default(long))
         {
             // to ensure "contract" is required (not null)
             this.Contract = contract ?? throw new ArgumentNullException("contract", "contract is a required property for FuturesOrder and cannot be null");
@@ -262,6 +264,8 @@ namespace Io.Gate.GateApi.Model
             this.Text = text;
             this.AutoSize = autoSize;
             this.StpAct = stpAct;
+            this.LimitVip = limitVip;
+            this.Pid = pid;
         }
 
         /// <summary>
@@ -284,6 +288,13 @@ namespace Io.Gate.GateApi.Model
         /// <value>Creation time of order</value>
         [DataMember(Name="create_time", EmitDefaultValue=false)]
         public double CreateTime { get; private set; }
+
+        /// <summary>
+        /// OrderUpdateTime
+        /// </summary>
+        /// <value>OrderUpdateTime</value>
+        [DataMember(Name="update_time", EmitDefaultValue=false)]
+        public double UpdateTime { get; private set; }
 
         /// <summary>
         /// Order finished time. Not returned if order is open
@@ -412,6 +423,20 @@ namespace Io.Gate.GateApi.Model
         public string AmendText { get; private set; }
 
         /// <summary>
+        /// Counterparty user&#39;s VIP level for limit order fills. Current order will only match with orders whose VIP level is less than or equal to the specified level. Only 11~16 are supported; default is 0
+        /// </summary>
+        /// <value>Counterparty user&#39;s VIP level for limit order fills. Current order will only match with orders whose VIP level is less than or equal to the specified level. Only 11~16 are supported; default is 0</value>
+        [DataMember(Name="limit_vip")]
+        public long LimitVip { get; set; }
+
+        /// <summary>
+        /// Position ID
+        /// </summary>
+        /// <value>Position ID</value>
+        [DataMember(Name="pid")]
+        public long Pid { get; set; }
+
+        /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
         /// <returns>String presentation of the object</returns>
@@ -422,6 +447,7 @@ namespace Io.Gate.GateApi.Model
             sb.Append("  Id: ").Append(Id).Append("\n");
             sb.Append("  User: ").Append(User).Append("\n");
             sb.Append("  CreateTime: ").Append(CreateTime).Append("\n");
+            sb.Append("  UpdateTime: ").Append(UpdateTime).Append("\n");
             sb.Append("  FinishTime: ").Append(FinishTime).Append("\n");
             sb.Append("  FinishAs: ").Append(FinishAs).Append("\n");
             sb.Append("  Status: ").Append(Status).Append("\n");
@@ -445,6 +471,8 @@ namespace Io.Gate.GateApi.Model
             sb.Append("  StpId: ").Append(StpId).Append("\n");
             sb.Append("  StpAct: ").Append(StpAct).Append("\n");
             sb.Append("  AmendText: ").Append(AmendText).Append("\n");
+            sb.Append("  LimitVip: ").Append(LimitVip).Append("\n");
+            sb.Append("  Pid: ").Append(Pid).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -490,6 +518,10 @@ namespace Io.Gate.GateApi.Model
                 (
                     this.CreateTime == input.CreateTime ||
                     this.CreateTime.Equals(input.CreateTime)
+                ) && 
+                (
+                    this.UpdateTime == input.UpdateTime ||
+                    this.UpdateTime.Equals(input.UpdateTime)
                 ) && 
                 (
                     this.FinishTime == input.FinishTime ||
@@ -589,6 +621,14 @@ namespace Io.Gate.GateApi.Model
                     this.AmendText == input.AmendText ||
                     (this.AmendText != null &&
                     this.AmendText.Equals(input.AmendText))
+                ) && 
+                (
+                    this.LimitVip == input.LimitVip ||
+                    this.LimitVip.Equals(input.LimitVip)
+                ) && 
+                (
+                    this.Pid == input.Pid ||
+                    this.Pid.Equals(input.Pid)
                 );
         }
 
@@ -604,6 +644,7 @@ namespace Io.Gate.GateApi.Model
                 hashCode = hashCode * 59 + this.Id.GetHashCode();
                 hashCode = hashCode * 59 + this.User.GetHashCode();
                 hashCode = hashCode * 59 + this.CreateTime.GetHashCode();
+                hashCode = hashCode * 59 + this.UpdateTime.GetHashCode();
                 hashCode = hashCode * 59 + this.FinishTime.GetHashCode();
                 hashCode = hashCode * 59 + this.FinishAs.GetHashCode();
                 hashCode = hashCode * 59 + this.Status.GetHashCode();
@@ -634,6 +675,8 @@ namespace Io.Gate.GateApi.Model
                 hashCode = hashCode * 59 + this.StpAct.GetHashCode();
                 if (this.AmendText != null)
                     hashCode = hashCode * 59 + this.AmendText.GetHashCode();
+                hashCode = hashCode * 59 + this.LimitVip.GetHashCode();
+                hashCode = hashCode * 59 + this.Pid.GetHashCode();
                 return hashCode;
             }
         }

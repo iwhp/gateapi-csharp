@@ -39,7 +39,7 @@ namespace Io.Gate.GateApi.Model
         /// Initializes a new instance of the <see cref="SubAccount" /> class.
         /// </summary>
         /// <param name="remark">Remark.</param>
-        /// <param name="loginName">子账户登陆名：仅支持字母、数字、下划线，不可包含其他非法字符。 (required).</param>
+        /// <param name="loginName">Sub-account login name: Only letters, numbers and underscores are supported, cannot contain other invalid characters (required).</param>
         /// <param name="password">The sub-account&#39;s password. (Default: the same as main account&#39;s password).</param>
         /// <param name="email">The sub-account&#39;s email address. (Default: the same as main account&#39;s email address).</param>
         public SubAccount(string remark = default(string), string loginName = default(string), string password = default(string), string email = default(string))
@@ -59,9 +59,9 @@ namespace Io.Gate.GateApi.Model
         public string Remark { get; set; }
 
         /// <summary>
-        /// 子账户登陆名：仅支持字母、数字、下划线，不可包含其他非法字符。
+        /// Sub-account login name: Only letters, numbers and underscores are supported, cannot contain other invalid characters
         /// </summary>
-        /// <value>子账户登陆名：仅支持字母、数字、下划线，不可包含其他非法字符。</value>
+        /// <value>Sub-account login name: Only letters, numbers and underscores are supported, cannot contain other invalid characters</value>
         [DataMember(Name="login_name")]
         public string LoginName { get; set; }
 

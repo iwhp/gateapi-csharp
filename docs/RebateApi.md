@@ -100,7 +100,7 @@ Name | Type | Description  | Notes
 
 <a name="agencycommissionshistory"></a>
 # **AgencyCommissionsHistory**
-> List&lt;AgencyCommissionHistory&gt; AgencyCommissionsHistory (string currency = null, long? userId = null, long? from = null, long? to = null, int? limit = null, int? offset = null)
+> List&lt;AgencyCommissionHistory&gt; AgencyCommissionsHistory (string currency = null, int? commissionType = null, long? userId = null, long? from = null, long? to = null, int? limit = null, int? offset = null)
 
 Broker obtains rebate history of recommended users
 
@@ -126,6 +126,7 @@ namespace Example
 
             var apiInstance = new RebateApi(config);
             var currency = "BTC";  // string | Specify the currency. If not specified, returns all currencies (optional) 
+            var commissionType = 1;  // int? | Rebate type: 1 - Direct rebate, 2 - Indirect rebate, 3 - Self rebate (optional) 
             var userId = 10003;  // long? | User ID. If not specified, all user records will be returned (optional) 
             var from = 1602120000;  // long? | Start time for querying records, defaults to 7 days before current time if not specified (optional) 
             var to = 1602123600;  // long? | End timestamp for the query, defaults to current time if not specified (optional) 
@@ -135,7 +136,7 @@ namespace Example
             try
             {
                 // Broker obtains rebate history of recommended users
-                List<AgencyCommissionHistory> result = apiInstance.AgencyCommissionsHistory(currency, userId, from, to, limit, offset);
+                List<AgencyCommissionHistory> result = apiInstance.AgencyCommissionsHistory(currency, commissionType, userId, from, to, limit, offset);
                 Debug.WriteLine(result);
             }
             catch (GateApiException e)
@@ -155,6 +156,7 @@ namespace Example
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **currency** | **string**| Specify the currency. If not specified, returns all currencies | [optional] 
+ **commissionType** | **int?**| Rebate type: 1 - Direct rebate, 2 - Indirect rebate, 3 - Self rebate | [optional] 
  **userId** | **long?**| User ID. If not specified, all user records will be returned | [optional] 
  **from** | **long?**| Start time for querying records, defaults to 7 days before current time if not specified | [optional] 
  **to** | **long?**| End timestamp for the query, defaults to current time if not specified | [optional] 

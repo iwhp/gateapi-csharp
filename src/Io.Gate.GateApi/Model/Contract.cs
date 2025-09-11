@@ -123,9 +123,11 @@ namespace Io.Gate.GateApi.Model
         /// <param name="enableCredit">Whether portfolio margin account is enabled.</param>
         /// <param name="createTime">Created time of the contract.</param>
         /// <param name="fundingCapRatio">The factor for the maximum of the funding rate. Maximum of funding rate &#x3D; (1/market maximum leverage - maintenance margin rate) * funding_cap_ratio.</param>
-        /// <param name="status">Contract status types include: prelaunch (pre-launch), trading (active), delisting (delisting), delisted (delisted).</param>
+        /// <param name="status">Contract status types include: prelaunch (pre-launch), trading (active), delisting (delisting), delisted (delisted), circuit_breaker (circuit breaker).</param>
         /// <param name="launchTime">Contract expiry timestamp.</param>
-        public Contract(string name = default(string), TypeEnum? type = default(TypeEnum?), string quantoMultiplier = default(string), string leverageMin = default(string), string leverageMax = default(string), string maintenanceRate = default(string), MarkTypeEnum? markType = default(MarkTypeEnum?), string markPrice = default(string), string indexPrice = default(string), string lastPrice = default(string), string makerFeeRate = default(string), string takerFeeRate = default(string), string orderPriceRound = default(string), string markPriceRound = default(string), string fundingRate = default(string), int fundingInterval = default(int), double fundingNextApply = default(double), string riskLimitBase = default(string), string riskLimitStep = default(string), string riskLimitMax = default(string), long orderSizeMin = default(long), long orderSizeMax = default(long), string orderPriceDeviate = default(string), string refDiscountRate = default(string), string refRebateRate = default(string), long orderbookId = default(long), long tradeId = default(long), long tradeSize = default(long), long positionSize = default(long), double configChangeTime = default(double), bool inDelisting = default(bool), int ordersLimit = default(int), bool enableBonus = default(bool), bool enableCredit = default(bool), double createTime = default(double), string fundingCapRatio = default(string), string status = default(string), long launchTime = default(long))
+        /// <param name="delistingTime">Timestamp when contract enters reduce-only state.</param>
+        /// <param name="delistedTime">Contract delisting time.</param>
+        public Contract(string name = default(string), TypeEnum? type = default(TypeEnum?), string quantoMultiplier = default(string), string leverageMin = default(string), string leverageMax = default(string), string maintenanceRate = default(string), MarkTypeEnum? markType = default(MarkTypeEnum?), string markPrice = default(string), string indexPrice = default(string), string lastPrice = default(string), string makerFeeRate = default(string), string takerFeeRate = default(string), string orderPriceRound = default(string), string markPriceRound = default(string), string fundingRate = default(string), int fundingInterval = default(int), double fundingNextApply = default(double), string riskLimitBase = default(string), string riskLimitStep = default(string), string riskLimitMax = default(string), long orderSizeMin = default(long), long orderSizeMax = default(long), string orderPriceDeviate = default(string), string refDiscountRate = default(string), string refRebateRate = default(string), long orderbookId = default(long), long tradeId = default(long), long tradeSize = default(long), long positionSize = default(long), double configChangeTime = default(double), bool inDelisting = default(bool), int ordersLimit = default(int), bool enableBonus = default(bool), bool enableCredit = default(bool), double createTime = default(double), string fundingCapRatio = default(string), string status = default(string), long launchTime = default(long), long delistingTime = default(long), long delistedTime = default(long))
         {
             this.Name = name;
             this.Type = type;
@@ -165,6 +167,8 @@ namespace Io.Gate.GateApi.Model
             this.FundingCapRatio = fundingCapRatio;
             this.Status = status;
             this.LaunchTime = launchTime;
+            this.DelistingTime = delistingTime;
+            this.DelistedTime = delistedTime;
         }
 
         /// <summary>
@@ -406,9 +410,9 @@ namespace Io.Gate.GateApi.Model
         public string FundingCapRatio { get; set; }
 
         /// <summary>
-        /// Contract status types include: prelaunch (pre-launch), trading (active), delisting (delisting), delisted (delisted)
+        /// Contract status types include: prelaunch (pre-launch), trading (active), delisting (delisting), delisted (delisted), circuit_breaker (circuit breaker)
         /// </summary>
-        /// <value>Contract status types include: prelaunch (pre-launch), trading (active), delisting (delisting), delisted (delisted)</value>
+        /// <value>Contract status types include: prelaunch (pre-launch), trading (active), delisting (delisting), delisted (delisted), circuit_breaker (circuit breaker)</value>
         [DataMember(Name="status")]
         public string Status { get; set; }
 
@@ -418,6 +422,20 @@ namespace Io.Gate.GateApi.Model
         /// <value>Contract expiry timestamp</value>
         [DataMember(Name="launch_time")]
         public long LaunchTime { get; set; }
+
+        /// <summary>
+        /// Timestamp when contract enters reduce-only state
+        /// </summary>
+        /// <value>Timestamp when contract enters reduce-only state</value>
+        [DataMember(Name="delisting_time")]
+        public long DelistingTime { get; set; }
+
+        /// <summary>
+        /// Contract delisting time
+        /// </summary>
+        /// <value>Contract delisting time</value>
+        [DataMember(Name="delisted_time")]
+        public long DelistedTime { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -465,6 +483,8 @@ namespace Io.Gate.GateApi.Model
             sb.Append("  FundingCapRatio: ").Append(FundingCapRatio).Append("\n");
             sb.Append("  Status: ").Append(Status).Append("\n");
             sb.Append("  LaunchTime: ").Append(LaunchTime).Append("\n");
+            sb.Append("  DelistingTime: ").Append(DelistingTime).Append("\n");
+            sb.Append("  DelistedTime: ").Append(DelistedTime).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -671,6 +691,14 @@ namespace Io.Gate.GateApi.Model
                 (
                     this.LaunchTime == input.LaunchTime ||
                     this.LaunchTime.Equals(input.LaunchTime)
+                ) && 
+                (
+                    this.DelistingTime == input.DelistingTime ||
+                    this.DelistingTime.Equals(input.DelistingTime)
+                ) && 
+                (
+                    this.DelistedTime == input.DelistedTime ||
+                    this.DelistedTime.Equals(input.DelistedTime)
                 );
         }
 
@@ -742,6 +770,8 @@ namespace Io.Gate.GateApi.Model
                 if (this.Status != null)
                     hashCode = hashCode * 59 + this.Status.GetHashCode();
                 hashCode = hashCode * 59 + this.LaunchTime.GetHashCode();
+                hashCode = hashCode * 59 + this.DelistingTime.GetHashCode();
+                hashCode = hashCode * 59 + this.DelistedTime.GetHashCode();
                 return hashCode;
             }
         }

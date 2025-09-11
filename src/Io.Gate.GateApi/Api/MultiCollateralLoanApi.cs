@@ -37,7 +37,7 @@ namespace Io.Gate.GateApi.Api
         /// <param name="page">Page number (optional, default to 1)</param>
         /// <param name="limit">Maximum number of records returned in a single list (optional, default to 10)</param>
         /// <param name="sort">Sort type: &#x60;time_desc&#x60; - Created time descending (default), &#x60;ltv_asc&#x60; - Collateral ratio ascending, &#x60;ltv_desc&#x60; - Collateral ratio descending. (optional)</param>
-        /// <param name="orderType">Order type: current - Query current orders, fixed - Query fixed orders, defaults to current orders if not specifiedOrder type: current - Query current orders, fixed - Query fixed orders, defaults to current orders if not specified (optional)</param>
+        /// <param name="orderType">Order type: current - Query current orders, fixed - Query fixed orders, defaults to current orders if not specified (optional)</param>
         /// <returns>List&lt;MultiCollateralOrder&gt;</returns>
         List<MultiCollateralOrder> ListMultiCollateralOrders (int? page = default(int?), int? limit = default(int?), string sort = default(string), string orderType = default(string));
 
@@ -51,7 +51,7 @@ namespace Io.Gate.GateApi.Api
         /// <param name="page">Page number (optional, default to 1)</param>
         /// <param name="limit">Maximum number of records returned in a single list (optional, default to 10)</param>
         /// <param name="sort">Sort type: &#x60;time_desc&#x60; - Created time descending (default), &#x60;ltv_asc&#x60; - Collateral ratio ascending, &#x60;ltv_desc&#x60; - Collateral ratio descending. (optional)</param>
-        /// <param name="orderType">Order type: current - Query current orders, fixed - Query fixed orders, defaults to current orders if not specifiedOrder type: current - Query current orders, fixed - Query fixed orders, defaults to current orders if not specified (optional)</param>
+        /// <param name="orderType">Order type: current - Query current orders, fixed - Query fixed orders, defaults to current orders if not specified (optional)</param>
         /// <returns>ApiResponse of List&lt;MultiCollateralOrder&gt;</returns>
         ApiResponse<List<MultiCollateralOrder>> ListMultiCollateralOrdersWithHttpInfo (int? page = default(int?), int? limit = default(int?), string sort = default(string), string orderType = default(string));
         /// <summary>
@@ -320,7 +320,7 @@ namespace Io.Gate.GateApi.Api
         /// <param name="page">Page number (optional, default to 1)</param>
         /// <param name="limit">Maximum number of records returned in a single list (optional, default to 10)</param>
         /// <param name="sort">Sort type: &#x60;time_desc&#x60; - Created time descending (default), &#x60;ltv_asc&#x60; - Collateral ratio ascending, &#x60;ltv_desc&#x60; - Collateral ratio descending. (optional)</param>
-        /// <param name="orderType">Order type: current - Query current orders, fixed - Query fixed orders, defaults to current orders if not specifiedOrder type: current - Query current orders, fixed - Query fixed orders, defaults to current orders if not specified (optional)</param>
+        /// <param name="orderType">Order type: current - Query current orders, fixed - Query fixed orders, defaults to current orders if not specified (optional)</param>
         /// <returns>Task of List&lt;MultiCollateralOrder&gt;</returns>
         Task<List<MultiCollateralOrder>> ListMultiCollateralOrdersAsync (int? page = default(int?), int? limit = default(int?), string sort = default(string), string orderType = default(string));
 
@@ -334,7 +334,7 @@ namespace Io.Gate.GateApi.Api
         /// <param name="page">Page number (optional, default to 1)</param>
         /// <param name="limit">Maximum number of records returned in a single list (optional, default to 10)</param>
         /// <param name="sort">Sort type: &#x60;time_desc&#x60; - Created time descending (default), &#x60;ltv_asc&#x60; - Collateral ratio ascending, &#x60;ltv_desc&#x60; - Collateral ratio descending. (optional)</param>
-        /// <param name="orderType">Order type: current - Query current orders, fixed - Query fixed orders, defaults to current orders if not specifiedOrder type: current - Query current orders, fixed - Query fixed orders, defaults to current orders if not specified (optional)</param>
+        /// <param name="orderType">Order type: current - Query current orders, fixed - Query fixed orders, defaults to current orders if not specified (optional)</param>
         /// <returns>Task of ApiResponse (List&lt;MultiCollateralOrder&gt;)</returns>
         Task<ApiResponse<List<MultiCollateralOrder>>> ListMultiCollateralOrdersAsyncWithHttpInfo (int? page = default(int?), int? limit = default(int?), string sort = default(string), string orderType = default(string));
         /// <summary>
@@ -711,7 +711,7 @@ namespace Io.Gate.GateApi.Api
         /// <param name="page">Page number (optional, default to 1)</param>
         /// <param name="limit">Maximum number of records returned in a single list (optional, default to 10)</param>
         /// <param name="sort">Sort type: &#x60;time_desc&#x60; - Created time descending (default), &#x60;ltv_asc&#x60; - Collateral ratio ascending, &#x60;ltv_desc&#x60; - Collateral ratio descending. (optional)</param>
-        /// <param name="orderType">Order type: current - Query current orders, fixed - Query fixed orders, defaults to current orders if not specifiedOrder type: current - Query current orders, fixed - Query fixed orders, defaults to current orders if not specified (optional)</param>
+        /// <param name="orderType">Order type: current - Query current orders, fixed - Query fixed orders, defaults to current orders if not specified (optional)</param>
         /// <returns>List&lt;MultiCollateralOrder&gt;</returns>
         public List<MultiCollateralOrder> ListMultiCollateralOrders (int? page = default(int?), int? limit = default(int?), string sort = default(string), string orderType = default(string))
         {
@@ -726,7 +726,7 @@ namespace Io.Gate.GateApi.Api
         /// <param name="page">Page number (optional, default to 1)</param>
         /// <param name="limit">Maximum number of records returned in a single list (optional, default to 10)</param>
         /// <param name="sort">Sort type: &#x60;time_desc&#x60; - Created time descending (default), &#x60;ltv_asc&#x60; - Collateral ratio ascending, &#x60;ltv_desc&#x60; - Collateral ratio descending. (optional)</param>
-        /// <param name="orderType">Order type: current - Query current orders, fixed - Query fixed orders, defaults to current orders if not specifiedOrder type: current - Query current orders, fixed - Query fixed orders, defaults to current orders if not specified (optional)</param>
+        /// <param name="orderType">Order type: current - Query current orders, fixed - Query fixed orders, defaults to current orders if not specified (optional)</param>
         /// <returns>ApiResponse of List&lt;MultiCollateralOrder&gt;</returns>
         public ApiResponse<List<MultiCollateralOrder>> ListMultiCollateralOrdersWithHttpInfo (int? page = default(int?), int? limit = default(int?), string sort = default(string), string orderType = default(string))
         {
@@ -785,7 +785,7 @@ namespace Io.Gate.GateApi.Api
         /// <param name="page">Page number (optional, default to 1)</param>
         /// <param name="limit">Maximum number of records returned in a single list (optional, default to 10)</param>
         /// <param name="sort">Sort type: &#x60;time_desc&#x60; - Created time descending (default), &#x60;ltv_asc&#x60; - Collateral ratio ascending, &#x60;ltv_desc&#x60; - Collateral ratio descending. (optional)</param>
-        /// <param name="orderType">Order type: current - Query current orders, fixed - Query fixed orders, defaults to current orders if not specifiedOrder type: current - Query current orders, fixed - Query fixed orders, defaults to current orders if not specified (optional)</param>
+        /// <param name="orderType">Order type: current - Query current orders, fixed - Query fixed orders, defaults to current orders if not specified (optional)</param>
         /// <returns>Task of List&lt;MultiCollateralOrder&gt;</returns>
         public async Task<List<MultiCollateralOrder>> ListMultiCollateralOrdersAsync (int? page = default(int?), int? limit = default(int?), string sort = default(string), string orderType = default(string))
         {
@@ -801,7 +801,7 @@ namespace Io.Gate.GateApi.Api
         /// <param name="page">Page number (optional, default to 1)</param>
         /// <param name="limit">Maximum number of records returned in a single list (optional, default to 10)</param>
         /// <param name="sort">Sort type: &#x60;time_desc&#x60; - Created time descending (default), &#x60;ltv_asc&#x60; - Collateral ratio ascending, &#x60;ltv_desc&#x60; - Collateral ratio descending. (optional)</param>
-        /// <param name="orderType">Order type: current - Query current orders, fixed - Query fixed orders, defaults to current orders if not specifiedOrder type: current - Query current orders, fixed - Query fixed orders, defaults to current orders if not specified (optional)</param>
+        /// <param name="orderType">Order type: current - Query current orders, fixed - Query fixed orders, defaults to current orders if not specified (optional)</param>
         /// <returns>Task of ApiResponse (List&lt;MultiCollateralOrder&gt;)</returns>
         public async Task<ApiResponse<List<MultiCollateralOrder>>> ListMultiCollateralOrdersAsyncWithHttpInfo (int? page = default(int?), int? limit = default(int?), string sort = default(string), string orderType = default(string))
         {

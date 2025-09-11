@@ -54,7 +54,12 @@ namespace Io.Gate.GateApi.Model
         /// <param name="lowestSize">The latest seller&#39;s lowest price order quantity.</param>
         /// <param name="highestBid">Recent highest bid.</param>
         /// <param name="highestSize">The latest buyer&#39;s highest price order volume.</param>
-        public FuturesTicker(string contract = default(string), string last = default(string), string changePercentage = default(string), string totalSize = default(string), string low24h = default(string), string high24h = default(string), string volume24h = default(string), string volume24hBtc = default(string), string volume24hUsd = default(string), string volume24hBase = default(string), string volume24hQuote = default(string), string volume24hSettle = default(string), string markPrice = default(string), string fundingRate = default(string), string fundingRateIndicative = default(string), string indexPrice = default(string), string quantoBaseRate = default(string), string lowestAsk = default(string), string lowestSize = default(string), string highestBid = default(string), string highestSize = default(string))
+        /// <param name="changeUtc0">Percentage change at utc0. Negative values indicate a drop, e.g., -7.45%.</param>
+        /// <param name="changeUtc8">Percentage change at utc8. Negative values indicate a drop, e.g., -7.45%.</param>
+        /// <param name="changePrice">24h change amount. Negative values indicate a drop, e.g., -7.45.</param>
+        /// <param name="changeUtc0Price">Change amount at utc0. Negative values indicate a drop, e.g., -7.45.</param>
+        /// <param name="changeUtc8Price">Change amount at utc8. Negative values indicate a drop, e.g., -7.45.</param>
+        public FuturesTicker(string contract = default(string), string last = default(string), string changePercentage = default(string), string totalSize = default(string), string low24h = default(string), string high24h = default(string), string volume24h = default(string), string volume24hBtc = default(string), string volume24hUsd = default(string), string volume24hBase = default(string), string volume24hQuote = default(string), string volume24hSettle = default(string), string markPrice = default(string), string fundingRate = default(string), string fundingRateIndicative = default(string), string indexPrice = default(string), string quantoBaseRate = default(string), string lowestAsk = default(string), string lowestSize = default(string), string highestBid = default(string), string highestSize = default(string), string changeUtc0 = default(string), string changeUtc8 = default(string), string changePrice = default(string), string changeUtc0Price = default(string), string changeUtc8Price = default(string))
         {
             this.Contract = contract;
             this.Last = last;
@@ -77,6 +82,11 @@ namespace Io.Gate.GateApi.Model
             this.LowestSize = lowestSize;
             this.HighestBid = highestBid;
             this.HighestSize = highestSize;
+            this.ChangeUtc0 = changeUtc0;
+            this.ChangeUtc8 = changeUtc8;
+            this.ChangePrice = changePrice;
+            this.ChangeUtc0Price = changeUtc0Price;
+            this.ChangeUtc8Price = changeUtc8Price;
         }
 
         /// <summary>
@@ -227,6 +237,41 @@ namespace Io.Gate.GateApi.Model
         public string HighestSize { get; set; }
 
         /// <summary>
+        /// Percentage change at utc0. Negative values indicate a drop, e.g., -7.45%
+        /// </summary>
+        /// <value>Percentage change at utc0. Negative values indicate a drop, e.g., -7.45%</value>
+        [DataMember(Name="change_utc0")]
+        public string ChangeUtc0 { get; set; }
+
+        /// <summary>
+        /// Percentage change at utc8. Negative values indicate a drop, e.g., -7.45%
+        /// </summary>
+        /// <value>Percentage change at utc8. Negative values indicate a drop, e.g., -7.45%</value>
+        [DataMember(Name="change_utc8")]
+        public string ChangeUtc8 { get; set; }
+
+        /// <summary>
+        /// 24h change amount. Negative values indicate a drop, e.g., -7.45
+        /// </summary>
+        /// <value>24h change amount. Negative values indicate a drop, e.g., -7.45</value>
+        [DataMember(Name="change_price")]
+        public string ChangePrice { get; set; }
+
+        /// <summary>
+        /// Change amount at utc0. Negative values indicate a drop, e.g., -7.45
+        /// </summary>
+        /// <value>Change amount at utc0. Negative values indicate a drop, e.g., -7.45</value>
+        [DataMember(Name="change_utc0_price")]
+        public string ChangeUtc0Price { get; set; }
+
+        /// <summary>
+        /// Change amount at utc8. Negative values indicate a drop, e.g., -7.45
+        /// </summary>
+        /// <value>Change amount at utc8. Negative values indicate a drop, e.g., -7.45</value>
+        [DataMember(Name="change_utc8_price")]
+        public string ChangeUtc8Price { get; set; }
+
+        /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
         /// <returns>String presentation of the object</returns>
@@ -255,6 +300,11 @@ namespace Io.Gate.GateApi.Model
             sb.Append("  LowestSize: ").Append(LowestSize).Append("\n");
             sb.Append("  HighestBid: ").Append(HighestBid).Append("\n");
             sb.Append("  HighestSize: ").Append(HighestSize).Append("\n");
+            sb.Append("  ChangeUtc0: ").Append(ChangeUtc0).Append("\n");
+            sb.Append("  ChangeUtc8: ").Append(ChangeUtc8).Append("\n");
+            sb.Append("  ChangePrice: ").Append(ChangePrice).Append("\n");
+            sb.Append("  ChangeUtc0Price: ").Append(ChangeUtc0Price).Append("\n");
+            sb.Append("  ChangeUtc8Price: ").Append(ChangeUtc8Price).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -393,6 +443,31 @@ namespace Io.Gate.GateApi.Model
                     this.HighestSize == input.HighestSize ||
                     (this.HighestSize != null &&
                     this.HighestSize.Equals(input.HighestSize))
+                ) && 
+                (
+                    this.ChangeUtc0 == input.ChangeUtc0 ||
+                    (this.ChangeUtc0 != null &&
+                    this.ChangeUtc0.Equals(input.ChangeUtc0))
+                ) && 
+                (
+                    this.ChangeUtc8 == input.ChangeUtc8 ||
+                    (this.ChangeUtc8 != null &&
+                    this.ChangeUtc8.Equals(input.ChangeUtc8))
+                ) && 
+                (
+                    this.ChangePrice == input.ChangePrice ||
+                    (this.ChangePrice != null &&
+                    this.ChangePrice.Equals(input.ChangePrice))
+                ) && 
+                (
+                    this.ChangeUtc0Price == input.ChangeUtc0Price ||
+                    (this.ChangeUtc0Price != null &&
+                    this.ChangeUtc0Price.Equals(input.ChangeUtc0Price))
+                ) && 
+                (
+                    this.ChangeUtc8Price == input.ChangeUtc8Price ||
+                    (this.ChangeUtc8Price != null &&
+                    this.ChangeUtc8Price.Equals(input.ChangeUtc8Price))
                 );
         }
 
@@ -447,6 +522,16 @@ namespace Io.Gate.GateApi.Model
                     hashCode = hashCode * 59 + this.HighestBid.GetHashCode();
                 if (this.HighestSize != null)
                     hashCode = hashCode * 59 + this.HighestSize.GetHashCode();
+                if (this.ChangeUtc0 != null)
+                    hashCode = hashCode * 59 + this.ChangeUtc0.GetHashCode();
+                if (this.ChangeUtc8 != null)
+                    hashCode = hashCode * 59 + this.ChangeUtc8.GetHashCode();
+                if (this.ChangePrice != null)
+                    hashCode = hashCode * 59 + this.ChangePrice.GetHashCode();
+                if (this.ChangeUtc0Price != null)
+                    hashCode = hashCode * 59 + this.ChangeUtc0Price.GetHashCode();
+                if (this.ChangeUtc8Price != null)
+                    hashCode = hashCode * 59 + this.ChangeUtc8Price.GetHashCode();
                 return hashCode;
             }
         }

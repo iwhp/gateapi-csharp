@@ -321,7 +321,7 @@ namespace Io.Gate.GateApi.Api
         /// <returns>ApiResponse of Dictionary&lt;string, string&gt;</returns>
         ApiResponse<Dictionary<string, string>> GetUnifiedEstimateRateWithHttpInfo (List<string> currencies);
         /// <summary>
-        /// Query unified account tiered discount
+        /// Query unified account tiered
         /// </summary>
         /// <remarks>
         /// 
@@ -331,7 +331,7 @@ namespace Io.Gate.GateApi.Api
         List<UnifiedDiscount> ListCurrencyDiscountTiers ();
 
         /// <summary>
-        /// Query unified account tiered discount
+        /// Query unified account tiered
         /// </summary>
         /// <remarks>
         /// 
@@ -814,7 +814,7 @@ namespace Io.Gate.GateApi.Api
         /// <returns>Task of ApiResponse (Dictionary&lt;string, string&gt;)</returns>
         Task<ApiResponse<Dictionary<string, string>>> GetUnifiedEstimateRateAsyncWithHttpInfo (List<string> currencies);
         /// <summary>
-        /// Query unified account tiered discount
+        /// Query unified account tiered
         /// </summary>
         /// <remarks>
         /// 
@@ -824,7 +824,7 @@ namespace Io.Gate.GateApi.Api
         Task<List<UnifiedDiscount>> ListCurrencyDiscountTiersAsync ();
 
         /// <summary>
-        /// Query unified account tiered discount
+        /// Query unified account tiered
         /// </summary>
         /// <remarks>
         /// 
@@ -2754,7 +2754,7 @@ namespace Io.Gate.GateApi.Api
         }
 
         /// <summary>
-        /// Query unified account tiered discount 
+        /// Query unified account tiered 
         /// </summary>
         /// <exception cref="Io.Gate.GateApi.Client.ApiException">Thrown when fails to make API call</exception>
         /// <returns>List&lt;UnifiedDiscount&gt;</returns>
@@ -2765,7 +2765,7 @@ namespace Io.Gate.GateApi.Api
         }
 
         /// <summary>
-        /// Query unified account tiered discount 
+        /// Query unified account tiered 
         /// </summary>
         /// <exception cref="Io.Gate.GateApi.Client.ApiException">Thrown when fails to make API call</exception>
         /// <returns>ApiResponse of List&lt;UnifiedDiscount&gt;</returns>
@@ -2802,7 +2802,7 @@ namespace Io.Gate.GateApi.Api
         }
 
         /// <summary>
-        /// Query unified account tiered discount 
+        /// Query unified account tiered 
         /// </summary>
         /// <exception cref="Io.Gate.GateApi.Client.ApiException">Thrown when fails to make API call</exception>
         /// <returns>Task of List&lt;UnifiedDiscount&gt;</returns>
@@ -2814,7 +2814,7 @@ namespace Io.Gate.GateApi.Api
         }
 
         /// <summary>
-        /// Query unified account tiered discount 
+        /// Query unified account tiered 
         /// </summary>
         /// <exception cref="Io.Gate.GateApi.Client.ApiException">Thrown when fails to make API call</exception>
         /// <returns>Task of ApiResponse (List&lt;UnifiedDiscount&gt;)</returns>

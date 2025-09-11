@@ -46,7 +46,8 @@ namespace Io.Gate.GateApi.Model
         /// <param name="openInterestUsd">Total open interest volume (quote currency).</param>
         /// <param name="topLsrAccount">Top trader long/short account ratio.</param>
         /// <param name="topLsrSize">Top trader long/short position ratio.</param>
-        public ContractStat(long time = default(long), decimal lsrTaker = default(decimal), decimal lsrAccount = default(decimal), long longLiqSize = default(long), double longLiqAmount = default(double), double longLiqUsd = default(double), long shortLiqSize = default(long), double shortLiqAmount = default(double), double shortLiqUsd = default(double), long openInterest = default(long), double openInterestUsd = default(double), double topLsrAccount = default(double), double topLsrSize = default(double))
+        /// <param name="markPrice">Mark price.</param>
+        public ContractStat(long time = default(long), decimal lsrTaker = default(decimal), decimal lsrAccount = default(decimal), long longLiqSize = default(long), double longLiqAmount = default(double), double longLiqUsd = default(double), long shortLiqSize = default(long), double shortLiqAmount = default(double), double shortLiqUsd = default(double), long openInterest = default(long), double openInterestUsd = default(double), double topLsrAccount = default(double), double topLsrSize = default(double), double markPrice = default(double))
         {
             this.Time = time;
             this.LsrTaker = lsrTaker;
@@ -61,6 +62,7 @@ namespace Io.Gate.GateApi.Model
             this.OpenInterestUsd = openInterestUsd;
             this.TopLsrAccount = topLsrAccount;
             this.TopLsrSize = topLsrSize;
+            this.MarkPrice = markPrice;
         }
 
         /// <summary>
@@ -155,6 +157,13 @@ namespace Io.Gate.GateApi.Model
         public double TopLsrSize { get; set; }
 
         /// <summary>
+        /// Mark price
+        /// </summary>
+        /// <value>Mark price</value>
+        [DataMember(Name="mark_price")]
+        public double MarkPrice { get; set; }
+
+        /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
         /// <returns>String presentation of the object</returns>
@@ -175,6 +184,7 @@ namespace Io.Gate.GateApi.Model
             sb.Append("  OpenInterestUsd: ").Append(OpenInterestUsd).Append("\n");
             sb.Append("  TopLsrAccount: ").Append(TopLsrAccount).Append("\n");
             sb.Append("  TopLsrSize: ").Append(TopLsrSize).Append("\n");
+            sb.Append("  MarkPrice: ").Append(MarkPrice).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -260,6 +270,10 @@ namespace Io.Gate.GateApi.Model
                 (
                     this.TopLsrSize == input.TopLsrSize ||
                     this.TopLsrSize.Equals(input.TopLsrSize)
+                ) && 
+                (
+                    this.MarkPrice == input.MarkPrice ||
+                    this.MarkPrice.Equals(input.MarkPrice)
                 );
         }
 
@@ -285,6 +299,7 @@ namespace Io.Gate.GateApi.Model
                 hashCode = hashCode * 59 + this.OpenInterestUsd.GetHashCode();
                 hashCode = hashCode * 59 + this.TopLsrAccount.GetHashCode();
                 hashCode = hashCode * 59 + this.TopLsrSize.GetHashCode();
+                hashCode = hashCode * 59 + this.MarkPrice.GetHashCode();
                 return hashCode;
             }
         }

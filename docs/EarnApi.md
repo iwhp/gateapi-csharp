@@ -595,7 +595,7 @@ void (empty response body)
 
 <a name="findcoin"></a>
 # **FindCoin**
-> List&lt;string&gt; FindCoin (FindCoin findCoin)
+> Object FindCoin (FindCoin findCoin)
 
 Staking coins
 
@@ -623,7 +623,7 @@ namespace Example
             try
             {
                 // Staking coins
-                List<string> result = apiInstance.FindCoin(findCoin);
+                Object result = apiInstance.FindCoin(findCoin);
                 Debug.WriteLine(result);
             }
             catch (GateApiException e)
@@ -646,7 +646,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**List<string>**
+**Object**
 
 ### Authorization
 

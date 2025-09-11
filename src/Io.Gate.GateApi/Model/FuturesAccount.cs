@@ -41,6 +41,7 @@ namespace Io.Gate.GateApi.Model
         /// <param name="point">Point card amount.</param>
         /// <param name="currency">Settlement currency.</param>
         /// <param name="inDualMode">Whether dual mode is enabled.</param>
+        /// <param name="positionMode">Position mode: single - one-way, dual - dual-side, split - sub-positions (in_dual_mode is deprecated).</param>
         /// <param name="enableCredit">Whether portfolio margin account mode is enabled.</param>
         /// <param name="positionInitialMargin">Initial margin occupied by positions, applicable to unified account mode.</param>
         /// <param name="maintenanceMargin">Maintenance margin occupied by positions, applicable to new classic account margin mode and unified account mode.</param>
@@ -59,7 +60,7 @@ namespace Io.Gate.GateApi.Model
         /// <param name="marginMode">Margin mode, 0-classic margin mode, 1-cross-currency margin mode, 2-combined margin mode.</param>
         /// <param name="enableTieredMm">Whether to enable tiered maintenance margin calculation.</param>
         /// <param name="history">history.</param>
-        public FuturesAccount(string total = default(string), string unrealisedPnl = default(string), string positionMargin = default(string), string orderMargin = default(string), string available = default(string), string point = default(string), string currency = default(string), bool inDualMode = default(bool), bool enableCredit = default(bool), string positionInitialMargin = default(string), string maintenanceMargin = default(string), string bonus = default(string), bool enableEvolvedClassic = default(bool), string crossOrderMargin = default(string), string crossInitialMargin = default(string), string crossMaintenanceMargin = default(string), string crossUnrealisedPnl = default(string), string crossAvailable = default(string), string crossMarginBalance = default(string), string crossMmr = default(string), string crossImr = default(string), string isolatedPositionMargin = default(string), bool enableNewDualMode = default(bool), int marginMode = default(int), bool enableTieredMm = default(bool), FuturesAccountHistory history = default(FuturesAccountHistory))
+        public FuturesAccount(string total = default(string), string unrealisedPnl = default(string), string positionMargin = default(string), string orderMargin = default(string), string available = default(string), string point = default(string), string currency = default(string), bool inDualMode = default(bool), string positionMode = default(string), bool enableCredit = default(bool), string positionInitialMargin = default(string), string maintenanceMargin = default(string), string bonus = default(string), bool enableEvolvedClassic = default(bool), string crossOrderMargin = default(string), string crossInitialMargin = default(string), string crossMaintenanceMargin = default(string), string crossUnrealisedPnl = default(string), string crossAvailable = default(string), string crossMarginBalance = default(string), string crossMmr = default(string), string crossImr = default(string), string isolatedPositionMargin = default(string), bool enableNewDualMode = default(bool), int marginMode = default(int), bool enableTieredMm = default(bool), FuturesAccountHistory history = default(FuturesAccountHistory))
         {
             this.Total = total;
             this.UnrealisedPnl = unrealisedPnl;
@@ -69,6 +70,7 @@ namespace Io.Gate.GateApi.Model
             this.Point = point;
             this.Currency = currency;
             this.InDualMode = inDualMode;
+            this.PositionMode = positionMode;
             this.EnableCredit = enableCredit;
             this.PositionInitialMargin = positionInitialMargin;
             this.MaintenanceMargin = maintenanceMargin;
@@ -144,6 +146,13 @@ namespace Io.Gate.GateApi.Model
         /// <value>Whether dual mode is enabled</value>
         [DataMember(Name="in_dual_mode")]
         public bool InDualMode { get; set; }
+
+        /// <summary>
+        /// Position mode: single - one-way, dual - dual-side, split - sub-positions (in_dual_mode is deprecated)
+        /// </summary>
+        /// <value>Position mode: single - one-way, dual - dual-side, split - sub-positions (in_dual_mode is deprecated)</value>
+        [DataMember(Name="position_mode")]
+        public string PositionMode { get; set; }
 
         /// <summary>
         /// Whether portfolio margin account mode is enabled
@@ -286,6 +295,7 @@ namespace Io.Gate.GateApi.Model
             sb.Append("  Point: ").Append(Point).Append("\n");
             sb.Append("  Currency: ").Append(Currency).Append("\n");
             sb.Append("  InDualMode: ").Append(InDualMode).Append("\n");
+            sb.Append("  PositionMode: ").Append(PositionMode).Append("\n");
             sb.Append("  EnableCredit: ").Append(EnableCredit).Append("\n");
             sb.Append("  PositionInitialMargin: ").Append(PositionInitialMargin).Append("\n");
             sb.Append("  MaintenanceMargin: ").Append(MaintenanceMargin).Append("\n");
@@ -376,6 +386,11 @@ namespace Io.Gate.GateApi.Model
                 (
                     this.InDualMode == input.InDualMode ||
                     this.InDualMode.Equals(input.InDualMode)
+                ) && 
+                (
+                    this.PositionMode == input.PositionMode ||
+                    (this.PositionMode != null &&
+                    this.PositionMode.Equals(input.PositionMode))
                 ) && 
                 (
                     this.EnableCredit == input.EnableCredit ||
@@ -488,6 +503,8 @@ namespace Io.Gate.GateApi.Model
                 if (this.Currency != null)
                     hashCode = hashCode * 59 + this.Currency.GetHashCode();
                 hashCode = hashCode * 59 + this.InDualMode.GetHashCode();
+                if (this.PositionMode != null)
+                    hashCode = hashCode * 59 + this.PositionMode.GetHashCode();
                 hashCode = hashCode * 59 + this.EnableCredit.GetHashCode();
                 if (this.PositionInitialMargin != null)
                     hashCode = hashCode * 59 + this.PositionInitialMargin.GetHashCode();

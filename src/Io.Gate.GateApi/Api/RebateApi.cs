@@ -66,13 +66,14 @@ namespace Io.Gate.GateApi.Api
         /// </remarks>
         /// <exception cref="Io.Gate.GateApi.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="currency">Specify the currency. If not specified, returns all currencies (optional)</param>
+        /// <param name="commissionType">Rebate type: 1 - Direct rebate, 2 - Indirect rebate, 3 - Self rebate (optional)</param>
         /// <param name="userId">User ID. If not specified, all user records will be returned (optional)</param>
         /// <param name="from">Start time for querying records, defaults to 7 days before current time if not specified (optional)</param>
         /// <param name="to">End timestamp for the query, defaults to current time if not specified (optional)</param>
         /// <param name="limit">Maximum number of records returned in a single list (optional, default to 100)</param>
         /// <param name="offset">List offset, starting from 0 (optional, default to 0)</param>
         /// <returns>List&lt;AgencyCommissionHistory&gt;</returns>
-        List<AgencyCommissionHistory> AgencyCommissionsHistory (string currency = default(string), long? userId = default(long?), long? from = default(long?), long? to = default(long?), int? limit = default(int?), int? offset = default(int?));
+        List<AgencyCommissionHistory> AgencyCommissionsHistory (string currency = default(string), int? commissionType = default(int?), long? userId = default(long?), long? from = default(long?), long? to = default(long?), int? limit = default(int?), int? offset = default(int?));
 
         /// <summary>
         /// Broker obtains rebate history of recommended users
@@ -82,13 +83,14 @@ namespace Io.Gate.GateApi.Api
         /// </remarks>
         /// <exception cref="Io.Gate.GateApi.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="currency">Specify the currency. If not specified, returns all currencies (optional)</param>
+        /// <param name="commissionType">Rebate type: 1 - Direct rebate, 2 - Indirect rebate, 3 - Self rebate (optional)</param>
         /// <param name="userId">User ID. If not specified, all user records will be returned (optional)</param>
         /// <param name="from">Start time for querying records, defaults to 7 days before current time if not specified (optional)</param>
         /// <param name="to">End timestamp for the query, defaults to current time if not specified (optional)</param>
         /// <param name="limit">Maximum number of records returned in a single list (optional, default to 100)</param>
         /// <param name="offset">List offset, starting from 0 (optional, default to 0)</param>
         /// <returns>ApiResponse of List&lt;AgencyCommissionHistory&gt;</returns>
-        ApiResponse<List<AgencyCommissionHistory>> AgencyCommissionsHistoryWithHttpInfo (string currency = default(string), long? userId = default(long?), long? from = default(long?), long? to = default(long?), int? limit = default(int?), int? offset = default(int?));
+        ApiResponse<List<AgencyCommissionHistory>> AgencyCommissionsHistoryWithHttpInfo (string currency = default(string), int? commissionType = default(int?), long? userId = default(long?), long? from = default(long?), long? to = default(long?), int? limit = default(int?), int? offset = default(int?));
         /// <summary>
         /// Partner obtains transaction history of recommended users
         /// </summary>
@@ -322,13 +324,14 @@ namespace Io.Gate.GateApi.Api
         /// </remarks>
         /// <exception cref="Io.Gate.GateApi.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="currency">Specify the currency. If not specified, returns all currencies (optional)</param>
+        /// <param name="commissionType">Rebate type: 1 - Direct rebate, 2 - Indirect rebate, 3 - Self rebate (optional)</param>
         /// <param name="userId">User ID. If not specified, all user records will be returned (optional)</param>
         /// <param name="from">Start time for querying records, defaults to 7 days before current time if not specified (optional)</param>
         /// <param name="to">End timestamp for the query, defaults to current time if not specified (optional)</param>
         /// <param name="limit">Maximum number of records returned in a single list (optional, default to 100)</param>
         /// <param name="offset">List offset, starting from 0 (optional, default to 0)</param>
         /// <returns>Task of List&lt;AgencyCommissionHistory&gt;</returns>
-        Task<List<AgencyCommissionHistory>> AgencyCommissionsHistoryAsync (string currency = default(string), long? userId = default(long?), long? from = default(long?), long? to = default(long?), int? limit = default(int?), int? offset = default(int?));
+        Task<List<AgencyCommissionHistory>> AgencyCommissionsHistoryAsync (string currency = default(string), int? commissionType = default(int?), long? userId = default(long?), long? from = default(long?), long? to = default(long?), int? limit = default(int?), int? offset = default(int?));
 
         /// <summary>
         /// Broker obtains rebate history of recommended users
@@ -338,13 +341,14 @@ namespace Io.Gate.GateApi.Api
         /// </remarks>
         /// <exception cref="Io.Gate.GateApi.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="currency">Specify the currency. If not specified, returns all currencies (optional)</param>
+        /// <param name="commissionType">Rebate type: 1 - Direct rebate, 2 - Indirect rebate, 3 - Self rebate (optional)</param>
         /// <param name="userId">User ID. If not specified, all user records will be returned (optional)</param>
         /// <param name="from">Start time for querying records, defaults to 7 days before current time if not specified (optional)</param>
         /// <param name="to">End timestamp for the query, defaults to current time if not specified (optional)</param>
         /// <param name="limit">Maximum number of records returned in a single list (optional, default to 100)</param>
         /// <param name="offset">List offset, starting from 0 (optional, default to 0)</param>
         /// <returns>Task of ApiResponse (List&lt;AgencyCommissionHistory&gt;)</returns>
-        Task<ApiResponse<List<AgencyCommissionHistory>>> AgencyCommissionsHistoryAsyncWithHttpInfo (string currency = default(string), long? userId = default(long?), long? from = default(long?), long? to = default(long?), int? limit = default(int?), int? offset = default(int?));
+        Task<ApiResponse<List<AgencyCommissionHistory>>> AgencyCommissionsHistoryAsyncWithHttpInfo (string currency = default(string), int? commissionType = default(int?), long? userId = default(long?), long? from = default(long?), long? to = default(long?), int? limit = default(int?), int? offset = default(int?));
         /// <summary>
         /// Partner obtains transaction history of recommended users
         /// </summary>
@@ -830,15 +834,16 @@ namespace Io.Gate.GateApi.Api
         /// </summary>
         /// <exception cref="Io.Gate.GateApi.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="currency">Specify the currency. If not specified, returns all currencies (optional)</param>
+        /// <param name="commissionType">Rebate type: 1 - Direct rebate, 2 - Indirect rebate, 3 - Self rebate (optional)</param>
         /// <param name="userId">User ID. If not specified, all user records will be returned (optional)</param>
         /// <param name="from">Start time for querying records, defaults to 7 days before current time if not specified (optional)</param>
         /// <param name="to">End timestamp for the query, defaults to current time if not specified (optional)</param>
         /// <param name="limit">Maximum number of records returned in a single list (optional, default to 100)</param>
         /// <param name="offset">List offset, starting from 0 (optional, default to 0)</param>
         /// <returns>List&lt;AgencyCommissionHistory&gt;</returns>
-        public List<AgencyCommissionHistory> AgencyCommissionsHistory (string currency = default(string), long? userId = default(long?), long? from = default(long?), long? to = default(long?), int? limit = default(int?), int? offset = default(int?))
+        public List<AgencyCommissionHistory> AgencyCommissionsHistory (string currency = default(string), int? commissionType = default(int?), long? userId = default(long?), long? from = default(long?), long? to = default(long?), int? limit = default(int?), int? offset = default(int?))
         {
-             ApiResponse<List<AgencyCommissionHistory>> localVarResponse = AgencyCommissionsHistoryWithHttpInfo(currency, userId, from, to, limit, offset);
+             ApiResponse<List<AgencyCommissionHistory>> localVarResponse = AgencyCommissionsHistoryWithHttpInfo(currency, commissionType, userId, from, to, limit, offset);
              return localVarResponse.Data;
         }
 
@@ -847,13 +852,14 @@ namespace Io.Gate.GateApi.Api
         /// </summary>
         /// <exception cref="Io.Gate.GateApi.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="currency">Specify the currency. If not specified, returns all currencies (optional)</param>
+        /// <param name="commissionType">Rebate type: 1 - Direct rebate, 2 - Indirect rebate, 3 - Self rebate (optional)</param>
         /// <param name="userId">User ID. If not specified, all user records will be returned (optional)</param>
         /// <param name="from">Start time for querying records, defaults to 7 days before current time if not specified (optional)</param>
         /// <param name="to">End timestamp for the query, defaults to current time if not specified (optional)</param>
         /// <param name="limit">Maximum number of records returned in a single list (optional, default to 100)</param>
         /// <param name="offset">List offset, starting from 0 (optional, default to 0)</param>
         /// <returns>ApiResponse of List&lt;AgencyCommissionHistory&gt;</returns>
-        public ApiResponse<List<AgencyCommissionHistory>> AgencyCommissionsHistoryWithHttpInfo (string currency = default(string), long? userId = default(long?), long? from = default(long?), long? to = default(long?), int? limit = default(int?), int? offset = default(int?))
+        public ApiResponse<List<AgencyCommissionHistory>> AgencyCommissionsHistoryWithHttpInfo (string currency = default(string), int? commissionType = default(int?), long? userId = default(long?), long? from = default(long?), long? to = default(long?), int? limit = default(int?), int? offset = default(int?))
         {
             RequestOptions localVarRequestOptions = new RequestOptions();
 
@@ -874,6 +880,10 @@ namespace Io.Gate.GateApi.Api
             if (currency != null)
             {
                 localVarRequestOptions.QueryParameters.Add(ClientUtils.ParameterToMultiMap("", "currency", currency));
+            }
+            if (commissionType != null)
+            {
+                localVarRequestOptions.QueryParameters.Add(ClientUtils.ParameterToMultiMap("", "commission_type", commissionType));
             }
             if (userId != null)
             {
@@ -916,15 +926,16 @@ namespace Io.Gate.GateApi.Api
         /// </summary>
         /// <exception cref="Io.Gate.GateApi.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="currency">Specify the currency. If not specified, returns all currencies (optional)</param>
+        /// <param name="commissionType">Rebate type: 1 - Direct rebate, 2 - Indirect rebate, 3 - Self rebate (optional)</param>
         /// <param name="userId">User ID. If not specified, all user records will be returned (optional)</param>
         /// <param name="from">Start time for querying records, defaults to 7 days before current time if not specified (optional)</param>
         /// <param name="to">End timestamp for the query, defaults to current time if not specified (optional)</param>
         /// <param name="limit">Maximum number of records returned in a single list (optional, default to 100)</param>
         /// <param name="offset">List offset, starting from 0 (optional, default to 0)</param>
         /// <returns>Task of List&lt;AgencyCommissionHistory&gt;</returns>
-        public async Task<List<AgencyCommissionHistory>> AgencyCommissionsHistoryAsync (string currency = default(string), long? userId = default(long?), long? from = default(long?), long? to = default(long?), int? limit = default(int?), int? offset = default(int?))
+        public async Task<List<AgencyCommissionHistory>> AgencyCommissionsHistoryAsync (string currency = default(string), int? commissionType = default(int?), long? userId = default(long?), long? from = default(long?), long? to = default(long?), int? limit = default(int?), int? offset = default(int?))
         {
-             Io.Gate.GateApi.Client.ApiResponse<List<AgencyCommissionHistory>> localVarResponse = await AgencyCommissionsHistoryAsyncWithHttpInfo(currency, userId, from, to, limit, offset);
+             Io.Gate.GateApi.Client.ApiResponse<List<AgencyCommissionHistory>> localVarResponse = await AgencyCommissionsHistoryAsyncWithHttpInfo(currency, commissionType, userId, from, to, limit, offset);
              return localVarResponse.Data;
 
         }
@@ -934,13 +945,14 @@ namespace Io.Gate.GateApi.Api
         /// </summary>
         /// <exception cref="Io.Gate.GateApi.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="currency">Specify the currency. If not specified, returns all currencies (optional)</param>
+        /// <param name="commissionType">Rebate type: 1 - Direct rebate, 2 - Indirect rebate, 3 - Self rebate (optional)</param>
         /// <param name="userId">User ID. If not specified, all user records will be returned (optional)</param>
         /// <param name="from">Start time for querying records, defaults to 7 days before current time if not specified (optional)</param>
         /// <param name="to">End timestamp for the query, defaults to current time if not specified (optional)</param>
         /// <param name="limit">Maximum number of records returned in a single list (optional, default to 100)</param>
         /// <param name="offset">List offset, starting from 0 (optional, default to 0)</param>
         /// <returns>Task of ApiResponse (List&lt;AgencyCommissionHistory&gt;)</returns>
-        public async Task<ApiResponse<List<AgencyCommissionHistory>>> AgencyCommissionsHistoryAsyncWithHttpInfo (string currency = default(string), long? userId = default(long?), long? from = default(long?), long? to = default(long?), int? limit = default(int?), int? offset = default(int?))
+        public async Task<ApiResponse<List<AgencyCommissionHistory>>> AgencyCommissionsHistoryAsyncWithHttpInfo (string currency = default(string), int? commissionType = default(int?), long? userId = default(long?), long? from = default(long?), long? to = default(long?), int? limit = default(int?), int? offset = default(int?))
         {
 
             RequestOptions localVarRequestOptions = new RequestOptions();
@@ -962,6 +974,10 @@ namespace Io.Gate.GateApi.Api
             if (currency != null)
             {
                 localVarRequestOptions.QueryParameters.Add(ClientUtils.ParameterToMultiMap("", "currency", currency));
+            }
+            if (commissionType != null)
+            {
+                localVarRequestOptions.QueryParameters.Add(ClientUtils.ParameterToMultiMap("", "commission_type", commissionType));
             }
             if (userId != null)
             {

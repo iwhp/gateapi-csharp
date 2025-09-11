@@ -18,6 +18,7 @@ Name | Type | Description | Notes
 **OpenInterestUsd** | **double** | Total open interest volume (quote currency) | [optional] 
 **TopLsrAccount** | **double** | Top trader long/short account ratio | [optional] 
 **TopLsrSize** | **double** | Top trader long/short position ratio | [optional] 
+**MarkPrice** | **double** | Mark price | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to API list]](../README.md#documentation-for-api-endpoints)

@@ -33,14 +33,19 @@ namespace Io.Gate.GateApi.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="MultiLoanRepayItem" /> class.
         /// </summary>
+        [JsonConstructorAttribute]
+        protected MultiLoanRepayItem() { }
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MultiLoanRepayItem" /> class.
+        /// </summary>
         /// <param name="currency">Repayment currency.</param>
         /// <param name="amount">Size.</param>
-        /// <param name="repaidAll">Repayment method, set to true for full repayment, false for partial repayment.</param>
+        /// <param name="repaidAll">Repayment method, set to true for full repayment, false for partial repayment (required).</param>
         public MultiLoanRepayItem(string currency = default(string), string amount = default(string), bool repaidAll = default(bool))
         {
+            this.RepaidAll = repaidAll;
             this.Currency = currency;
             this.Amount = amount;
-            this.RepaidAll = repaidAll;
         }
 
         /// <summary>

@@ -36,11 +36,13 @@ namespace Io.Gate.GateApi.Model
         /// <param name="size">New order size, including filled part.  - If new size is less than or equal to filled size, the order will be cancelled. - Order side must be identical to the original one. - Close order size cannot be changed. - For reduce only orders, increasing size may leads to other reduce only orders being cancelled. - If price is not changed, decreasing size will not change its precedence in order book, while increasing will move it to the last at current price..</param>
         /// <param name="price">New order price.</param>
         /// <param name="amendText">Custom info during order amendment.</param>
-        public FuturesOrderAmendment(long size = default(long), string price = default(string), string amendText = default(string))
+        /// <param name="text">Internal users can modify information in the text field..</param>
+        public FuturesOrderAmendment(long size = default(long), string price = default(string), string amendText = default(string), string text = default(string))
         {
             this.Size = size;
             this.Price = price;
             this.AmendText = amendText;
+            this.Text = text;
         }
 
         /// <summary>
@@ -65,6 +67,13 @@ namespace Io.Gate.GateApi.Model
         public string AmendText { get; set; }
 
         /// <summary>
+        /// Internal users can modify information in the text field.
+        /// </summary>
+        /// <value>Internal users can modify information in the text field.</value>
+        [DataMember(Name="text")]
+        public string Text { get; set; }
+
+        /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
         /// <returns>String presentation of the object</returns>
@@ -75,6 +84,7 @@ namespace Io.Gate.GateApi.Model
             sb.Append("  Size: ").Append(Size).Append("\n");
             sb.Append("  Price: ").Append(Price).Append("\n");
             sb.Append("  AmendText: ").Append(AmendText).Append("\n");
+            sb.Append("  Text: ").Append(Text).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -122,6 +132,11 @@ namespace Io.Gate.GateApi.Model
                     this.AmendText == input.AmendText ||
                     (this.AmendText != null &&
                     this.AmendText.Equals(input.AmendText))
+                ) && 
+                (
+                    this.Text == input.Text ||
+                    (this.Text != null &&
+                    this.Text.Equals(input.Text))
                 );
         }
 
@@ -139,6 +154,8 @@ namespace Io.Gate.GateApi.Model
                     hashCode = hashCode * 59 + this.Price.GetHashCode();
                 if (this.AmendText != null)
                     hashCode = hashCode * 59 + this.AmendText.GetHashCode();
+                if (this.Text != null)
+                    hashCode = hashCode * 59 + this.Text.GetHashCode();
                 return hashCode;
             }
         }

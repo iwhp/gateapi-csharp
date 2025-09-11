@@ -219,8 +219,8 @@ namespace Io.Gate.GateApi.Api
         /// </remarks>
         /// <exception cref="Io.Gate.GateApi.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="findCoin"></param>
-        /// <returns>List&lt;string&gt;</returns>
-        List<string> FindCoin (FindCoin findCoin);
+        /// <returns>Object</returns>
+        Object FindCoin (FindCoin findCoin);
 
         /// <summary>
         /// Staking coins
@@ -230,8 +230,8 @@ namespace Io.Gate.GateApi.Api
         /// </remarks>
         /// <exception cref="Io.Gate.GateApi.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="findCoin"></param>
-        /// <returns>ApiResponse of List&lt;string&gt;</returns>
-        ApiResponse<List<string>> FindCoinWithHttpInfo (FindCoin findCoin);
+        /// <returns>ApiResponse of Object</returns>
+        ApiResponse<Object> FindCoinWithHttpInfo (FindCoin findCoin);
         /// <summary>
         /// On-chain token swap for earned coins
         /// </summary>
@@ -454,8 +454,8 @@ namespace Io.Gate.GateApi.Api
         /// </remarks>
         /// <exception cref="Io.Gate.GateApi.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="findCoin"></param>
-        /// <returns>Task of List&lt;string&gt;</returns>
-        Task<List<string>> FindCoinAsync (FindCoin findCoin);
+        /// <returns>Task of Object</returns>
+        Task<Object> FindCoinAsync (FindCoin findCoin);
 
         /// <summary>
         /// Staking coins
@@ -465,8 +465,8 @@ namespace Io.Gate.GateApi.Api
         /// </remarks>
         /// <exception cref="Io.Gate.GateApi.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="findCoin"></param>
-        /// <returns>Task of ApiResponse (List&lt;string&gt;)</returns>
-        Task<ApiResponse<List<string>>> FindCoinAsyncWithHttpInfo (FindCoin findCoin);
+        /// <returns>Task of ApiResponse (Object)</returns>
+        Task<ApiResponse<Object>> FindCoinAsyncWithHttpInfo (FindCoin findCoin);
         /// <summary>
         /// On-chain token swap for earned coins
         /// </summary>
@@ -1623,10 +1623,10 @@ namespace Io.Gate.GateApi.Api
         /// </summary>
         /// <exception cref="Io.Gate.GateApi.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="findCoin"></param>
-        /// <returns>List&lt;string&gt;</returns>
-        public List<string> FindCoin (FindCoin findCoin)
+        /// <returns>Object</returns>
+        public Object FindCoin (FindCoin findCoin)
         {
-             ApiResponse<List<string>> localVarResponse = FindCoinWithHttpInfo(findCoin);
+             ApiResponse<Object> localVarResponse = FindCoinWithHttpInfo(findCoin);
              return localVarResponse.Data;
         }
 
@@ -1635,8 +1635,8 @@ namespace Io.Gate.GateApi.Api
         /// </summary>
         /// <exception cref="Io.Gate.GateApi.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="findCoin"></param>
-        /// <returns>ApiResponse of List&lt;string&gt;</returns>
-        public ApiResponse<List<string>> FindCoinWithHttpInfo (FindCoin findCoin)
+        /// <returns>ApiResponse of Object</returns>
+        public ApiResponse<Object> FindCoinWithHttpInfo (FindCoin findCoin)
         {
             // verify the required parameter 'findCoin' is set
             if (findCoin == null)
@@ -1665,7 +1665,7 @@ namespace Io.Gate.GateApi.Api
             localVarRequestOptions.RequireApiV4Auth = true;
 
             // make the HTTP request
-            var localVarResponse = this.Client.Get<List<string>>("/earn/staking/coins", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Get<Object>("/earn/staking/coins", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -1681,10 +1681,10 @@ namespace Io.Gate.GateApi.Api
         /// </summary>
         /// <exception cref="Io.Gate.GateApi.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="findCoin"></param>
-        /// <returns>Task of List&lt;string&gt;</returns>
-        public async Task<List<string>> FindCoinAsync (FindCoin findCoin)
+        /// <returns>Task of Object</returns>
+        public async Task<Object> FindCoinAsync (FindCoin findCoin)
         {
-             Io.Gate.GateApi.Client.ApiResponse<List<string>> localVarResponse = await FindCoinAsyncWithHttpInfo(findCoin);
+             Io.Gate.GateApi.Client.ApiResponse<Object> localVarResponse = await FindCoinAsyncWithHttpInfo(findCoin);
              return localVarResponse.Data;
 
         }
@@ -1694,8 +1694,8 @@ namespace Io.Gate.GateApi.Api
         /// </summary>
         /// <exception cref="Io.Gate.GateApi.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="findCoin"></param>
-        /// <returns>Task of ApiResponse (List&lt;string&gt;)</returns>
-        public async Task<ApiResponse<List<string>>> FindCoinAsyncWithHttpInfo (FindCoin findCoin)
+        /// <returns>Task of ApiResponse (Object)</returns>
+        public async Task<ApiResponse<Object>> FindCoinAsyncWithHttpInfo (FindCoin findCoin)
         {
             // verify the required parameter 'findCoin' is set
             if (findCoin == null)
@@ -1726,7 +1726,7 @@ namespace Io.Gate.GateApi.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.GetAsync<List<string>>("/earn/staking/coins", localVarRequestOptions, this.Configuration);
+            var localVarResponse = await this.AsynchronousClient.GetAsync<Object>("/earn/staking/coins", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {

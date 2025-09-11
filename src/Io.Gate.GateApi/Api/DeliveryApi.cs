@@ -110,7 +110,7 @@ namespace Io.Gate.GateApi.Api
         /// <param name="settle">Settle currency</param>
         /// <param name="contract">Futures contract</param>
         /// <param name="limit">Maximum number of records returned in a single list (optional, default to 100)</param>
-        /// <param name="lastId">以上个列表的最后一条记录的 ID 作为下个列表的起点。 该字段不再继续支持，新的请求请使用 &#x60;from&#x60; 和 &#x60;to&#x60; 字段来限定时间范围 (optional)</param>
+        /// <param name="lastId">Use the ID of the last record in the previous list as the starting point for the next list.This field is no longer supported. For new requests, please use the fromand tofields to specify the time rang (optional)</param>
         /// <param name="from">Specify starting time in Unix seconds. If not specified, &#x60;to&#x60; and &#x60;limit&#x60; will be used to limit response items. If items between &#x60;from&#x60; and &#x60;to&#x60; are more than &#x60;limit&#x60;, only &#x60;limit&#x60; number will be returned.  (optional)</param>
         /// <param name="to">Specify end time in Unix seconds, default to current time. (optional)</param>
         /// <returns>List&lt;FuturesTrade&gt;</returns>
@@ -126,7 +126,7 @@ namespace Io.Gate.GateApi.Api
         /// <param name="settle">Settle currency</param>
         /// <param name="contract">Futures contract</param>
         /// <param name="limit">Maximum number of records returned in a single list (optional, default to 100)</param>
-        /// <param name="lastId">以上个列表的最后一条记录的 ID 作为下个列表的起点。 该字段不再继续支持，新的请求请使用 &#x60;from&#x60; 和 &#x60;to&#x60; 字段来限定时间范围 (optional)</param>
+        /// <param name="lastId">Use the ID of the last record in the previous list as the starting point for the next list.This field is no longer supported. For new requests, please use the fromand tofields to specify the time rang (optional)</param>
         /// <param name="from">Specify starting time in Unix seconds. If not specified, &#x60;to&#x60; and &#x60;limit&#x60; will be used to limit response items. If items between &#x60;from&#x60; and &#x60;to&#x60; are more than &#x60;limit&#x60;, only &#x60;limit&#x60; number will be returned.  (optional)</param>
         /// <param name="to">Specify end time in Unix seconds, default to current time. (optional)</param>
         /// <returns>ApiResponse of List&lt;FuturesTrade&gt;</returns>
@@ -143,7 +143,7 @@ namespace Io.Gate.GateApi.Api
         /// <param name="from">Start time of candlesticks, formatted in Unix timestamp in seconds. Default to&#x60;to - 100 * interval&#x60; if not specified (optional)</param>
         /// <param name="to">Specify the end time of the K-line chart, defaults to current time if not specified, note that the time format is Unix timestamp with second precision (optional)</param>
         /// <param name="limit">Maximum number of recent data points to return. &#x60;limit&#x60; conflicts with &#x60;from&#x60; and &#x60;to&#x60;. If either &#x60;from&#x60; or &#x60;to&#x60; is specified, request will be rejected. (optional, default to 100)</param>
-        /// <param name="interval">Time interval between data points, note that 1w represents a natural week, 7d time is aligned with Unix initial timeTime interval between data points, note that 1w represents a natural week, 7d time is aligned with Unix initial timeweek, 7d time is aligned with Unix initial time (optional, default to 5m)</param>
+        /// <param name="interval">Time interval between data points, note that 1w represents a natural week, 7d time is aligned with Unix initial time (optional, default to 5m)</param>
         /// <returns>List&lt;DeliveryCandlestick&gt;</returns>
         List<DeliveryCandlestick> ListDeliveryCandlesticks (string settle, string contract, long? from = default(long?), long? to = default(long?), int? limit = default(int?), string interval = default(string));
 
@@ -159,7 +159,7 @@ namespace Io.Gate.GateApi.Api
         /// <param name="from">Start time of candlesticks, formatted in Unix timestamp in seconds. Default to&#x60;to - 100 * interval&#x60; if not specified (optional)</param>
         /// <param name="to">Specify the end time of the K-line chart, defaults to current time if not specified, note that the time format is Unix timestamp with second precision (optional)</param>
         /// <param name="limit">Maximum number of recent data points to return. &#x60;limit&#x60; conflicts with &#x60;from&#x60; and &#x60;to&#x60;. If either &#x60;from&#x60; or &#x60;to&#x60; is specified, request will be rejected. (optional, default to 100)</param>
-        /// <param name="interval">Time interval between data points, note that 1w represents a natural week, 7d time is aligned with Unix initial timeTime interval between data points, note that 1w represents a natural week, 7d time is aligned with Unix initial timeweek, 7d time is aligned with Unix initial time (optional, default to 5m)</param>
+        /// <param name="interval">Time interval between data points, note that 1w represents a natural week, 7d time is aligned with Unix initial time (optional, default to 5m)</param>
         /// <returns>ApiResponse of List&lt;DeliveryCandlestick&gt;</returns>
         ApiResponse<List<DeliveryCandlestick>> ListDeliveryCandlesticksWithHttpInfo (string settle, string contract, long? from = default(long?), long? to = default(long?), int? limit = default(int?), string interval = default(string));
         /// <summary>
@@ -240,7 +240,7 @@ namespace Io.Gate.GateApi.Api
         /// <param name="limit">Maximum number of records returned in a single list (optional, default to 100)</param>
         /// <param name="from">Start timestamp  Specify start time, time format is Unix timestamp. If not specified, it defaults to (the data start time of the time range actually returned by to and limit) (optional)</param>
         /// <param name="to">Termination Timestamp  Specify the end time. If not specified, it defaults to the current time, and the time format is a Unix timestamp (optional)</param>
-        /// <param name="type">Changing Type: - dnw: Deposit &amp; Withdraw - pnl: Profit &amp; Loss by reducing position - fee: Trading fee - refr: Referrer rebate - fund: Funding - point_dnw: point_fee: POINT Trading fee - point_refr: POINT Referrer rebate (optional)</param>
+        /// <param name="type">Change types: - dnw: Deposit and withdrawal - pnl: Profit and loss from position reduction - fee: Trading fees - refr: Referrer rebates - fund: Funding fees - point_dnw: Point card deposit and withdrawal - point_fee: Point card trading fees - point_refr: Point card referrer rebates (optional)</param>
         /// <returns>List&lt;FuturesAccountBook&gt;</returns>
         List<FuturesAccountBook> ListDeliveryAccountBook (string settle, int? limit = default(int?), long? from = default(long?), long? to = default(long?), string type = default(string));
 
@@ -255,7 +255,7 @@ namespace Io.Gate.GateApi.Api
         /// <param name="limit">Maximum number of records returned in a single list (optional, default to 100)</param>
         /// <param name="from">Start timestamp  Specify start time, time format is Unix timestamp. If not specified, it defaults to (the data start time of the time range actually returned by to and limit) (optional)</param>
         /// <param name="to">Termination Timestamp  Specify the end time. If not specified, it defaults to the current time, and the time format is a Unix timestamp (optional)</param>
-        /// <param name="type">Changing Type: - dnw: Deposit &amp; Withdraw - pnl: Profit &amp; Loss by reducing position - fee: Trading fee - refr: Referrer rebate - fund: Funding - point_dnw: point_fee: POINT Trading fee - point_refr: POINT Referrer rebate (optional)</param>
+        /// <param name="type">Change types: - dnw: Deposit and withdrawal - pnl: Profit and loss from position reduction - fee: Trading fees - refr: Referrer rebates - fund: Funding fees - point_dnw: Point card deposit and withdrawal - point_fee: Point card trading fees - point_refr: Point card referrer rebates (optional)</param>
         /// <returns>ApiResponse of List&lt;FuturesAccountBook&gt;</returns>
         ApiResponse<List<FuturesAccountBook>> ListDeliveryAccountBookWithHttpInfo (string settle, int? limit = default(int?), long? from = default(long?), long? to = default(long?), string type = default(string));
         /// <summary>
@@ -389,7 +389,7 @@ namespace Io.Gate.GateApi.Api
         /// <param name="contract">Futures contract (optional)</param>
         /// <param name="limit">Maximum number of records returned in a single list (optional, default to 100)</param>
         /// <param name="offset">List offset, starting from 0 (optional, default to 0)</param>
-        /// <param name="lastId">Specify the currency name to query in batches, and support up to 100 pass parameters at a time (optional)</param>
+        /// <param name="lastId">Use the ID of the last record in the previous list as the starting point for the next list  Operations based on custom IDs can only be checked when orders are pending. After orders are completed (filled/cancelled), they can be checked within 1 hour after completion. After expiration, only order IDs can be used (optional)</param>
         /// <param name="countTotal">Whether to return total number matched, defaults to 0 (no return) (optional, default to 0)</param>
         /// <returns>List&lt;FuturesOrder&gt;</returns>
         List<FuturesOrder> ListDeliveryOrders (string settle, string status, string contract = default(string), int? limit = default(int?), int? offset = default(int?), string lastId = default(string), int? countTotal = default(int?));
@@ -406,7 +406,7 @@ namespace Io.Gate.GateApi.Api
         /// <param name="contract">Futures contract (optional)</param>
         /// <param name="limit">Maximum number of records returned in a single list (optional, default to 100)</param>
         /// <param name="offset">List offset, starting from 0 (optional, default to 0)</param>
-        /// <param name="lastId">Specify the currency name to query in batches, and support up to 100 pass parameters at a time (optional)</param>
+        /// <param name="lastId">Use the ID of the last record in the previous list as the starting point for the next list  Operations based on custom IDs can only be checked when orders are pending. After orders are completed (filled/cancelled), they can be checked within 1 hour after completion. After expiration, only order IDs can be used (optional)</param>
         /// <param name="countTotal">Whether to return total number matched, defaults to 0 (no return) (optional, default to 0)</param>
         /// <returns>ApiResponse of List&lt;FuturesOrder&gt;</returns>
         ApiResponse<List<FuturesOrder>> ListDeliveryOrdersWithHttpInfo (string settle, string status, string contract = default(string), int? limit = default(int?), int? offset = default(int?), string lastId = default(string), int? countTotal = default(int?));
@@ -516,7 +516,7 @@ namespace Io.Gate.GateApi.Api
         /// <param name="order">Futures order ID, return related data only if specified (optional)</param>
         /// <param name="limit">Maximum number of records returned in a single list (optional, default to 100)</param>
         /// <param name="offset">List offset, starting from 0 (optional, default to 0)</param>
-        /// <param name="lastId">Specify the currency name to query in batches, and support up to 100 pass parameters at a time (optional)</param>
+        /// <param name="lastId">Use the ID of the last record in the previous list as the starting point for the next list  Operations based on custom IDs can only be checked when orders are pending. After orders are completed (filled/cancelled), they can be checked within 1 hour after completion. After expiration, only order IDs can be used (optional)</param>
         /// <param name="countTotal">Whether to return total number matched, defaults to 0 (no return) (optional, default to 0)</param>
         /// <returns>List&lt;MyFuturesTrade&gt;</returns>
         List<MyFuturesTrade> GetMyDeliveryTrades (string settle, string contract = default(string), long? order = default(long?), int? limit = default(int?), int? offset = default(int?), string lastId = default(string), int? countTotal = default(int?));
@@ -533,7 +533,7 @@ namespace Io.Gate.GateApi.Api
         /// <param name="order">Futures order ID, return related data only if specified (optional)</param>
         /// <param name="limit">Maximum number of records returned in a single list (optional, default to 100)</param>
         /// <param name="offset">List offset, starting from 0 (optional, default to 0)</param>
-        /// <param name="lastId">Specify the currency name to query in batches, and support up to 100 pass parameters at a time (optional)</param>
+        /// <param name="lastId">Use the ID of the last record in the previous list as the starting point for the next list  Operations based on custom IDs can only be checked when orders are pending. After orders are completed (filled/cancelled), they can be checked within 1 hour after completion. After expiration, only order IDs can be used (optional)</param>
         /// <param name="countTotal">Whether to return total number matched, defaults to 0 (no return) (optional, default to 0)</param>
         /// <returns>ApiResponse of List&lt;MyFuturesTrade&gt;</returns>
         ApiResponse<List<MyFuturesTrade>> GetMyDeliveryTradesWithHttpInfo (string settle, string contract = default(string), long? order = default(long?), int? limit = default(int?), int? offset = default(int?), string lastId = default(string), int? countTotal = default(int?));
@@ -620,7 +620,7 @@ namespace Io.Gate.GateApi.Api
         /// Query risk limit tiers
         /// </summary>
         /// <remarks>
-        /// When the &#39;contract&#39; parameter is not passed, the default is to query the risk limits for the top 100 markets.&#39;Limit&#39; and &#39;offset&#39; correspond to pagination queries at the market level, not to the length of the returned array. This only takes effect empty.
+        /// When the &#39;contract&#39; parameter is not passed, the default is to query the risk limits for the top 100 markets. &#39;Limit&#39; and &#39;offset&#39; correspond to pagination queries at the market level, not to the length of the returned array. This only takes effect when the contract parameter is empty.
         /// </remarks>
         /// <exception cref="Io.Gate.GateApi.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="settle">Settle currency</param>
@@ -634,7 +634,7 @@ namespace Io.Gate.GateApi.Api
         /// Query risk limit tiers
         /// </summary>
         /// <remarks>
-        /// When the &#39;contract&#39; parameter is not passed, the default is to query the risk limits for the top 100 markets.&#39;Limit&#39; and &#39;offset&#39; correspond to pagination queries at the market level, not to the length of the returned array. This only takes effect empty.
+        /// When the &#39;contract&#39; parameter is not passed, the default is to query the risk limits for the top 100 markets. &#39;Limit&#39; and &#39;offset&#39; correspond to pagination queries at the market level, not to the length of the returned array. This only takes effect when the contract parameter is empty.
         /// </remarks>
         /// <exception cref="Io.Gate.GateApi.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="settle">Settle currency</param>
@@ -856,7 +856,7 @@ namespace Io.Gate.GateApi.Api
         /// <param name="settle">Settle currency</param>
         /// <param name="contract">Futures contract</param>
         /// <param name="limit">Maximum number of records returned in a single list (optional, default to 100)</param>
-        /// <param name="lastId">以上个列表的最后一条记录的 ID 作为下个列表的起点。 该字段不再继续支持，新的请求请使用 &#x60;from&#x60; 和 &#x60;to&#x60; 字段来限定时间范围 (optional)</param>
+        /// <param name="lastId">Use the ID of the last record in the previous list as the starting point for the next list.This field is no longer supported. For new requests, please use the fromand tofields to specify the time rang (optional)</param>
         /// <param name="from">Specify starting time in Unix seconds. If not specified, &#x60;to&#x60; and &#x60;limit&#x60; will be used to limit response items. If items between &#x60;from&#x60; and &#x60;to&#x60; are more than &#x60;limit&#x60;, only &#x60;limit&#x60; number will be returned.  (optional)</param>
         /// <param name="to">Specify end time in Unix seconds, default to current time. (optional)</param>
         /// <returns>Task of List&lt;FuturesTrade&gt;</returns>
@@ -872,7 +872,7 @@ namespace Io.Gate.GateApi.Api
         /// <param name="settle">Settle currency</param>
         /// <param name="contract">Futures contract</param>
         /// <param name="limit">Maximum number of records returned in a single list (optional, default to 100)</param>
-        /// <param name="lastId">以上个列表的最后一条记录的 ID 作为下个列表的起点。 该字段不再继续支持，新的请求请使用 &#x60;from&#x60; 和 &#x60;to&#x60; 字段来限定时间范围 (optional)</param>
+        /// <param name="lastId">Use the ID of the last record in the previous list as the starting point for the next list.This field is no longer supported. For new requests, please use the fromand tofields to specify the time rang (optional)</param>
         /// <param name="from">Specify starting time in Unix seconds. If not specified, &#x60;to&#x60; and &#x60;limit&#x60; will be used to limit response items. If items between &#x60;from&#x60; and &#x60;to&#x60; are more than &#x60;limit&#x60;, only &#x60;limit&#x60; number will be returned.  (optional)</param>
         /// <param name="to">Specify end time in Unix seconds, default to current time. (optional)</param>
         /// <returns>Task of ApiResponse (List&lt;FuturesTrade&gt;)</returns>
@@ -889,7 +889,7 @@ namespace Io.Gate.GateApi.Api
         /// <param name="from">Start time of candlesticks, formatted in Unix timestamp in seconds. Default to&#x60;to - 100 * interval&#x60; if not specified (optional)</param>
         /// <param name="to">Specify the end time of the K-line chart, defaults to current time if not specified, note that the time format is Unix timestamp with second precision (optional)</param>
         /// <param name="limit">Maximum number of recent data points to return. &#x60;limit&#x60; conflicts with &#x60;from&#x60; and &#x60;to&#x60;. If either &#x60;from&#x60; or &#x60;to&#x60; is specified, request will be rejected. (optional, default to 100)</param>
-        /// <param name="interval">Time interval between data points, note that 1w represents a natural week, 7d time is aligned with Unix initial timeTime interval between data points, note that 1w represents a natural week, 7d time is aligned with Unix initial timeweek, 7d time is aligned with Unix initial time (optional, default to 5m)</param>
+        /// <param name="interval">Time interval between data points, note that 1w represents a natural week, 7d time is aligned with Unix initial time (optional, default to 5m)</param>
         /// <returns>Task of List&lt;DeliveryCandlestick&gt;</returns>
         Task<List<DeliveryCandlestick>> ListDeliveryCandlesticksAsync (string settle, string contract, long? from = default(long?), long? to = default(long?), int? limit = default(int?), string interval = default(string));
 
@@ -905,7 +905,7 @@ namespace Io.Gate.GateApi.Api
         /// <param name="from">Start time of candlesticks, formatted in Unix timestamp in seconds. Default to&#x60;to - 100 * interval&#x60; if not specified (optional)</param>
         /// <param name="to">Specify the end time of the K-line chart, defaults to current time if not specified, note that the time format is Unix timestamp with second precision (optional)</param>
         /// <param name="limit">Maximum number of recent data points to return. &#x60;limit&#x60; conflicts with &#x60;from&#x60; and &#x60;to&#x60;. If either &#x60;from&#x60; or &#x60;to&#x60; is specified, request will be rejected. (optional, default to 100)</param>
-        /// <param name="interval">Time interval between data points, note that 1w represents a natural week, 7d time is aligned with Unix initial timeTime interval between data points, note that 1w represents a natural week, 7d time is aligned with Unix initial timeweek, 7d time is aligned with Unix initial time (optional, default to 5m)</param>
+        /// <param name="interval">Time interval between data points, note that 1w represents a natural week, 7d time is aligned with Unix initial time (optional, default to 5m)</param>
         /// <returns>Task of ApiResponse (List&lt;DeliveryCandlestick&gt;)</returns>
         Task<ApiResponse<List<DeliveryCandlestick>>> ListDeliveryCandlesticksAsyncWithHttpInfo (string settle, string contract, long? from = default(long?), long? to = default(long?), int? limit = default(int?), string interval = default(string));
         /// <summary>
@@ -986,7 +986,7 @@ namespace Io.Gate.GateApi.Api
         /// <param name="limit">Maximum number of records returned in a single list (optional, default to 100)</param>
         /// <param name="from">Start timestamp  Specify start time, time format is Unix timestamp. If not specified, it defaults to (the data start time of the time range actually returned by to and limit) (optional)</param>
         /// <param name="to">Termination Timestamp  Specify the end time. If not specified, it defaults to the current time, and the time format is a Unix timestamp (optional)</param>
-        /// <param name="type">Changing Type: - dnw: Deposit &amp; Withdraw - pnl: Profit &amp; Loss by reducing position - fee: Trading fee - refr: Referrer rebate - fund: Funding - point_dnw: point_fee: POINT Trading fee - point_refr: POINT Referrer rebate (optional)</param>
+        /// <param name="type">Change types: - dnw: Deposit and withdrawal - pnl: Profit and loss from position reduction - fee: Trading fees - refr: Referrer rebates - fund: Funding fees - point_dnw: Point card deposit and withdrawal - point_fee: Point card trading fees - point_refr: Point card referrer rebates (optional)</param>
         /// <returns>Task of List&lt;FuturesAccountBook&gt;</returns>
         Task<List<FuturesAccountBook>> ListDeliveryAccountBookAsync (string settle, int? limit = default(int?), long? from = default(long?), long? to = default(long?), string type = default(string));
 
@@ -1001,7 +1001,7 @@ namespace Io.Gate.GateApi.Api
         /// <param name="limit">Maximum number of records returned in a single list (optional, default to 100)</param>
         /// <param name="from">Start timestamp  Specify start time, time format is Unix timestamp. If not specified, it defaults to (the data start time of the time range actually returned by to and limit) (optional)</param>
         /// <param name="to">Termination Timestamp  Specify the end time. If not specified, it defaults to the current time, and the time format is a Unix timestamp (optional)</param>
-        /// <param name="type">Changing Type: - dnw: Deposit &amp; Withdraw - pnl: Profit &amp; Loss by reducing position - fee: Trading fee - refr: Referrer rebate - fund: Funding - point_dnw: point_fee: POINT Trading fee - point_refr: POINT Referrer rebate (optional)</param>
+        /// <param name="type">Change types: - dnw: Deposit and withdrawal - pnl: Profit and loss from position reduction - fee: Trading fees - refr: Referrer rebates - fund: Funding fees - point_dnw: Point card deposit and withdrawal - point_fee: Point card trading fees - point_refr: Point card referrer rebates (optional)</param>
         /// <returns>Task of ApiResponse (List&lt;FuturesAccountBook&gt;)</returns>
         Task<ApiResponse<List<FuturesAccountBook>>> ListDeliveryAccountBookAsyncWithHttpInfo (string settle, int? limit = default(int?), long? from = default(long?), long? to = default(long?), string type = default(string));
         /// <summary>
@@ -1135,7 +1135,7 @@ namespace Io.Gate.GateApi.Api
         /// <param name="contract">Futures contract (optional)</param>
         /// <param name="limit">Maximum number of records returned in a single list (optional, default to 100)</param>
         /// <param name="offset">List offset, starting from 0 (optional, default to 0)</param>
-        /// <param name="lastId">Specify the currency name to query in batches, and support up to 100 pass parameters at a time (optional)</param>
+        /// <param name="lastId">Use the ID of the last record in the previous list as the starting point for the next list  Operations based on custom IDs can only be checked when orders are pending. After orders are completed (filled/cancelled), they can be checked within 1 hour after completion. After expiration, only order IDs can be used (optional)</param>
         /// <param name="countTotal">Whether to return total number matched, defaults to 0 (no return) (optional, default to 0)</param>
         /// <returns>Task of List&lt;FuturesOrder&gt;</returns>
         Task<List<FuturesOrder>> ListDeliveryOrdersAsync (string settle, string status, string contract = default(string), int? limit = default(int?), int? offset = default(int?), string lastId = default(string), int? countTotal = default(int?));
@@ -1152,7 +1152,7 @@ namespace Io.Gate.GateApi.Api
         /// <param name="contract">Futures contract (optional)</param>
         /// <param name="limit">Maximum number of records returned in a single list (optional, default to 100)</param>
         /// <param name="offset">List offset, starting from 0 (optional, default to 0)</param>
-        /// <param name="lastId">Specify the currency name to query in batches, and support up to 100 pass parameters at a time (optional)</param>
+        /// <param name="lastId">Use the ID of the last record in the previous list as the starting point for the next list  Operations based on custom IDs can only be checked when orders are pending. After orders are completed (filled/cancelled), they can be checked within 1 hour after completion. After expiration, only order IDs can be used (optional)</param>
         /// <param name="countTotal">Whether to return total number matched, defaults to 0 (no return) (optional, default to 0)</param>
         /// <returns>Task of ApiResponse (List&lt;FuturesOrder&gt;)</returns>
         Task<ApiResponse<List<FuturesOrder>>> ListDeliveryOrdersAsyncWithHttpInfo (string settle, string status, string contract = default(string), int? limit = default(int?), int? offset = default(int?), string lastId = default(string), int? countTotal = default(int?));
@@ -1262,7 +1262,7 @@ namespace Io.Gate.GateApi.Api
         /// <param name="order">Futures order ID, return related data only if specified (optional)</param>
         /// <param name="limit">Maximum number of records returned in a single list (optional, default to 100)</param>
         /// <param name="offset">List offset, starting from 0 (optional, default to 0)</param>
-        /// <param name="lastId">Specify the currency name to query in batches, and support up to 100 pass parameters at a time (optional)</param>
+        /// <param name="lastId">Use the ID of the last record in the previous list as the starting point for the next list  Operations based on custom IDs can only be checked when orders are pending. After orders are completed (filled/cancelled), they can be checked within 1 hour after completion. After expiration, only order IDs can be used (optional)</param>
         /// <param name="countTotal">Whether to return total number matched, defaults to 0 (no return) (optional, default to 0)</param>
         /// <returns>Task of List&lt;MyFuturesTrade&gt;</returns>
         Task<List<MyFuturesTrade>> GetMyDeliveryTradesAsync (string settle, string contract = default(string), long? order = default(long?), int? limit = default(int?), int? offset = default(int?), string lastId = default(string), int? countTotal = default(int?));
@@ -1279,7 +1279,7 @@ namespace Io.Gate.GateApi.Api
         /// <param name="order">Futures order ID, return related data only if specified (optional)</param>
         /// <param name="limit">Maximum number of records returned in a single list (optional, default to 100)</param>
         /// <param name="offset">List offset, starting from 0 (optional, default to 0)</param>
-        /// <param name="lastId">Specify the currency name to query in batches, and support up to 100 pass parameters at a time (optional)</param>
+        /// <param name="lastId">Use the ID of the last record in the previous list as the starting point for the next list  Operations based on custom IDs can only be checked when orders are pending. After orders are completed (filled/cancelled), they can be checked within 1 hour after completion. After expiration, only order IDs can be used (optional)</param>
         /// <param name="countTotal">Whether to return total number matched, defaults to 0 (no return) (optional, default to 0)</param>
         /// <returns>Task of ApiResponse (List&lt;MyFuturesTrade&gt;)</returns>
         Task<ApiResponse<List<MyFuturesTrade>>> GetMyDeliveryTradesAsyncWithHttpInfo (string settle, string contract = default(string), long? order = default(long?), int? limit = default(int?), int? offset = default(int?), string lastId = default(string), int? countTotal = default(int?));
@@ -1366,7 +1366,7 @@ namespace Io.Gate.GateApi.Api
         /// Query risk limit tiers
         /// </summary>
         /// <remarks>
-        /// When the &#39;contract&#39; parameter is not passed, the default is to query the risk limits for the top 100 markets.&#39;Limit&#39; and &#39;offset&#39; correspond to pagination queries at the market level, not to the length of the returned array. This only takes effect empty.
+        /// When the &#39;contract&#39; parameter is not passed, the default is to query the risk limits for the top 100 markets. &#39;Limit&#39; and &#39;offset&#39; correspond to pagination queries at the market level, not to the length of the returned array. This only takes effect when the contract parameter is empty.
         /// </remarks>
         /// <exception cref="Io.Gate.GateApi.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="settle">Settle currency</param>
@@ -1380,7 +1380,7 @@ namespace Io.Gate.GateApi.Api
         /// Query risk limit tiers
         /// </summary>
         /// <remarks>
-        /// When the &#39;contract&#39; parameter is not passed, the default is to query the risk limits for the top 100 markets.&#39;Limit&#39; and &#39;offset&#39; correspond to pagination queries at the market level, not to the length of the returned array. This only takes effect empty.
+        /// When the &#39;contract&#39; parameter is not passed, the default is to query the risk limits for the top 100 markets. &#39;Limit&#39; and &#39;offset&#39; correspond to pagination queries at the market level, not to the length of the returned array. This only takes effect when the contract parameter is empty.
         /// </remarks>
         /// <exception cref="Io.Gate.GateApi.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="settle">Settle currency</param>
@@ -2040,7 +2040,7 @@ namespace Io.Gate.GateApi.Api
         /// <param name="settle">Settle currency</param>
         /// <param name="contract">Futures contract</param>
         /// <param name="limit">Maximum number of records returned in a single list (optional, default to 100)</param>
-        /// <param name="lastId">以上个列表的最后一条记录的 ID 作为下个列表的起点。 该字段不再继续支持，新的请求请使用 &#x60;from&#x60; 和 &#x60;to&#x60; 字段来限定时间范围 (optional)</param>
+        /// <param name="lastId">Use the ID of the last record in the previous list as the starting point for the next list.This field is no longer supported. For new requests, please use the fromand tofields to specify the time rang (optional)</param>
         /// <param name="from">Specify starting time in Unix seconds. If not specified, &#x60;to&#x60; and &#x60;limit&#x60; will be used to limit response items. If items between &#x60;from&#x60; and &#x60;to&#x60; are more than &#x60;limit&#x60;, only &#x60;limit&#x60; number will be returned.  (optional)</param>
         /// <param name="to">Specify end time in Unix seconds, default to current time. (optional)</param>
         /// <returns>List&lt;FuturesTrade&gt;</returns>
@@ -2057,7 +2057,7 @@ namespace Io.Gate.GateApi.Api
         /// <param name="settle">Settle currency</param>
         /// <param name="contract">Futures contract</param>
         /// <param name="limit">Maximum number of records returned in a single list (optional, default to 100)</param>
-        /// <param name="lastId">以上个列表的最后一条记录的 ID 作为下个列表的起点。 该字段不再继续支持，新的请求请使用 &#x60;from&#x60; 和 &#x60;to&#x60; 字段来限定时间范围 (optional)</param>
+        /// <param name="lastId">Use the ID of the last record in the previous list as the starting point for the next list.This field is no longer supported. For new requests, please use the fromand tofields to specify the time rang (optional)</param>
         /// <param name="from">Specify starting time in Unix seconds. If not specified, &#x60;to&#x60; and &#x60;limit&#x60; will be used to limit response items. If items between &#x60;from&#x60; and &#x60;to&#x60; are more than &#x60;limit&#x60;, only &#x60;limit&#x60; number will be returned.  (optional)</param>
         /// <param name="to">Specify end time in Unix seconds, default to current time. (optional)</param>
         /// <returns>ApiResponse of List&lt;FuturesTrade&gt;</returns>
@@ -2126,7 +2126,7 @@ namespace Io.Gate.GateApi.Api
         /// <param name="settle">Settle currency</param>
         /// <param name="contract">Futures contract</param>
         /// <param name="limit">Maximum number of records returned in a single list (optional, default to 100)</param>
-        /// <param name="lastId">以上个列表的最后一条记录的 ID 作为下个列表的起点。 该字段不再继续支持，新的请求请使用 &#x60;from&#x60; 和 &#x60;to&#x60; 字段来限定时间范围 (optional)</param>
+        /// <param name="lastId">Use the ID of the last record in the previous list as the starting point for the next list.This field is no longer supported. For new requests, please use the fromand tofields to specify the time rang (optional)</param>
         /// <param name="from">Specify starting time in Unix seconds. If not specified, &#x60;to&#x60; and &#x60;limit&#x60; will be used to limit response items. If items between &#x60;from&#x60; and &#x60;to&#x60; are more than &#x60;limit&#x60;, only &#x60;limit&#x60; number will be returned.  (optional)</param>
         /// <param name="to">Specify end time in Unix seconds, default to current time. (optional)</param>
         /// <returns>Task of List&lt;FuturesTrade&gt;</returns>
@@ -2144,7 +2144,7 @@ namespace Io.Gate.GateApi.Api
         /// <param name="settle">Settle currency</param>
         /// <param name="contract">Futures contract</param>
         /// <param name="limit">Maximum number of records returned in a single list (optional, default to 100)</param>
-        /// <param name="lastId">以上个列表的最后一条记录的 ID 作为下个列表的起点。 该字段不再继续支持，新的请求请使用 &#x60;from&#x60; 和 &#x60;to&#x60; 字段来限定时间范围 (optional)</param>
+        /// <param name="lastId">Use the ID of the last record in the previous list as the starting point for the next list.This field is no longer supported. For new requests, please use the fromand tofields to specify the time rang (optional)</param>
         /// <param name="from">Specify starting time in Unix seconds. If not specified, &#x60;to&#x60; and &#x60;limit&#x60; will be used to limit response items. If items between &#x60;from&#x60; and &#x60;to&#x60; are more than &#x60;limit&#x60;, only &#x60;limit&#x60; number will be returned.  (optional)</param>
         /// <param name="to">Specify end time in Unix seconds, default to current time. (optional)</param>
         /// <returns>Task of ApiResponse (List&lt;FuturesTrade&gt;)</returns>
@@ -2217,7 +2217,7 @@ namespace Io.Gate.GateApi.Api
         /// <param name="from">Start time of candlesticks, formatted in Unix timestamp in seconds. Default to&#x60;to - 100 * interval&#x60; if not specified (optional)</param>
         /// <param name="to">Specify the end time of the K-line chart, defaults to current time if not specified, note that the time format is Unix timestamp with second precision (optional)</param>
         /// <param name="limit">Maximum number of recent data points to return. &#x60;limit&#x60; conflicts with &#x60;from&#x60; and &#x60;to&#x60;. If either &#x60;from&#x60; or &#x60;to&#x60; is specified, request will be rejected. (optional, default to 100)</param>
-        /// <param name="interval">Time interval between data points, note that 1w represents a natural week, 7d time is aligned with Unix initial timeTime interval between data points, note that 1w represents a natural week, 7d time is aligned with Unix initial timeweek, 7d time is aligned with Unix initial time (optional, default to 5m)</param>
+        /// <param name="interval">Time interval between data points, note that 1w represents a natural week, 7d time is aligned with Unix initial time (optional, default to 5m)</param>
         /// <returns>List&lt;DeliveryCandlestick&gt;</returns>
         public List<DeliveryCandlestick> ListDeliveryCandlesticks (string settle, string contract, long? from = default(long?), long? to = default(long?), int? limit = default(int?), string interval = default(string))
         {
@@ -2234,7 +2234,7 @@ namespace Io.Gate.GateApi.Api
         /// <param name="from">Start time of candlesticks, formatted in Unix timestamp in seconds. Default to&#x60;to - 100 * interval&#x60; if not specified (optional)</param>
         /// <param name="to">Specify the end time of the K-line chart, defaults to current time if not specified, note that the time format is Unix timestamp with second precision (optional)</param>
         /// <param name="limit">Maximum number of recent data points to return. &#x60;limit&#x60; conflicts with &#x60;from&#x60; and &#x60;to&#x60;. If either &#x60;from&#x60; or &#x60;to&#x60; is specified, request will be rejected. (optional, default to 100)</param>
-        /// <param name="interval">Time interval between data points, note that 1w represents a natural week, 7d time is aligned with Unix initial timeTime interval between data points, note that 1w represents a natural week, 7d time is aligned with Unix initial timeweek, 7d time is aligned with Unix initial time (optional, default to 5m)</param>
+        /// <param name="interval">Time interval between data points, note that 1w represents a natural week, 7d time is aligned with Unix initial time (optional, default to 5m)</param>
         /// <returns>ApiResponse of List&lt;DeliveryCandlestick&gt;</returns>
         public ApiResponse<List<DeliveryCandlestick>> ListDeliveryCandlesticksWithHttpInfo (string settle, string contract, long? from = default(long?), long? to = default(long?), int? limit = default(int?), string interval = default(string))
         {
@@ -2303,7 +2303,7 @@ namespace Io.Gate.GateApi.Api
         /// <param name="from">Start time of candlesticks, formatted in Unix timestamp in seconds. Default to&#x60;to - 100 * interval&#x60; if not specified (optional)</param>
         /// <param name="to">Specify the end time of the K-line chart, defaults to current time if not specified, note that the time format is Unix timestamp with second precision (optional)</param>
         /// <param name="limit">Maximum number of recent data points to return. &#x60;limit&#x60; conflicts with &#x60;from&#x60; and &#x60;to&#x60;. If either &#x60;from&#x60; or &#x60;to&#x60; is specified, request will be rejected. (optional, default to 100)</param>
-        /// <param name="interval">Time interval between data points, note that 1w represents a natural week, 7d time is aligned with Unix initial timeTime interval between data points, note that 1w represents a natural week, 7d time is aligned with Unix initial timeweek, 7d time is aligned with Unix initial time (optional, default to 5m)</param>
+        /// <param name="interval">Time interval between data points, note that 1w represents a natural week, 7d time is aligned with Unix initial time (optional, default to 5m)</param>
         /// <returns>Task of List&lt;DeliveryCandlestick&gt;</returns>
         public async Task<List<DeliveryCandlestick>> ListDeliveryCandlesticksAsync (string settle, string contract, long? from = default(long?), long? to = default(long?), int? limit = default(int?), string interval = default(string))
         {
@@ -2321,7 +2321,7 @@ namespace Io.Gate.GateApi.Api
         /// <param name="from">Start time of candlesticks, formatted in Unix timestamp in seconds. Default to&#x60;to - 100 * interval&#x60; if not specified (optional)</param>
         /// <param name="to">Specify the end time of the K-line chart, defaults to current time if not specified, note that the time format is Unix timestamp with second precision (optional)</param>
         /// <param name="limit">Maximum number of recent data points to return. &#x60;limit&#x60; conflicts with &#x60;from&#x60; and &#x60;to&#x60;. If either &#x60;from&#x60; or &#x60;to&#x60; is specified, request will be rejected. (optional, default to 100)</param>
-        /// <param name="interval">Time interval between data points, note that 1w represents a natural week, 7d time is aligned with Unix initial timeTime interval between data points, note that 1w represents a natural week, 7d time is aligned with Unix initial timeweek, 7d time is aligned with Unix initial time (optional, default to 5m)</param>
+        /// <param name="interval">Time interval between data points, note that 1w represents a natural week, 7d time is aligned with Unix initial time (optional, default to 5m)</param>
         /// <returns>Task of ApiResponse (List&lt;DeliveryCandlestick&gt;)</returns>
         public async Task<ApiResponse<List<DeliveryCandlestick>>> ListDeliveryCandlesticksAsyncWithHttpInfo (string settle, string contract, long? from = default(long?), long? to = default(long?), int? limit = default(int?), string interval = default(string))
         {
@@ -2758,7 +2758,7 @@ namespace Io.Gate.GateApi.Api
         /// <param name="limit">Maximum number of records returned in a single list (optional, default to 100)</param>
         /// <param name="from">Start timestamp  Specify start time, time format is Unix timestamp. If not specified, it defaults to (the data start time of the time range actually returned by to and limit) (optional)</param>
         /// <param name="to">Termination Timestamp  Specify the end time. If not specified, it defaults to the current time, and the time format is a Unix timestamp (optional)</param>
-        /// <param name="type">Changing Type: - dnw: Deposit &amp; Withdraw - pnl: Profit &amp; Loss by reducing position - fee: Trading fee - refr: Referrer rebate - fund: Funding - point_dnw: point_fee: POINT Trading fee - point_refr: POINT Referrer rebate (optional)</param>
+        /// <param name="type">Change types: - dnw: Deposit and withdrawal - pnl: Profit and loss from position reduction - fee: Trading fees - refr: Referrer rebates - fund: Funding fees - point_dnw: Point card deposit and withdrawal - point_fee: Point card trading fees - point_refr: Point card referrer rebates (optional)</param>
         /// <returns>List&lt;FuturesAccountBook&gt;</returns>
         public List<FuturesAccountBook> ListDeliveryAccountBook (string settle, int? limit = default(int?), long? from = default(long?), long? to = default(long?), string type = default(string))
         {
@@ -2774,7 +2774,7 @@ namespace Io.Gate.GateApi.Api
         /// <param name="limit">Maximum number of records returned in a single list (optional, default to 100)</param>
         /// <param name="from">Start timestamp  Specify start time, time format is Unix timestamp. If not specified, it defaults to (the data start time of the time range actually returned by to and limit) (optional)</param>
         /// <param name="to">Termination Timestamp  Specify the end time. If not specified, it defaults to the current time, and the time format is a Unix timestamp (optional)</param>
-        /// <param name="type">Changing Type: - dnw: Deposit &amp; Withdraw - pnl: Profit &amp; Loss by reducing position - fee: Trading fee - refr: Referrer rebate - fund: Funding - point_dnw: point_fee: POINT Trading fee - point_refr: POINT Referrer rebate (optional)</param>
+        /// <param name="type">Change types: - dnw: Deposit and withdrawal - pnl: Profit and loss from position reduction - fee: Trading fees - refr: Referrer rebates - fund: Funding fees - point_dnw: Point card deposit and withdrawal - point_fee: Point card trading fees - point_refr: Point card referrer rebates (optional)</param>
         /// <returns>ApiResponse of List&lt;FuturesAccountBook&gt;</returns>
         public ApiResponse<List<FuturesAccountBook>> ListDeliveryAccountBookWithHttpInfo (string settle, int? limit = default(int?), long? from = default(long?), long? to = default(long?), string type = default(string))
         {
@@ -2839,7 +2839,7 @@ namespace Io.Gate.GateApi.Api
         /// <param name="limit">Maximum number of records returned in a single list (optional, default to 100)</param>
         /// <param name="from">Start timestamp  Specify start time, time format is Unix timestamp. If not specified, it defaults to (the data start time of the time range actually returned by to and limit) (optional)</param>
         /// <param name="to">Termination Timestamp  Specify the end time. If not specified, it defaults to the current time, and the time format is a Unix timestamp (optional)</param>
-        /// <param name="type">Changing Type: - dnw: Deposit &amp; Withdraw - pnl: Profit &amp; Loss by reducing position - fee: Trading fee - refr: Referrer rebate - fund: Funding - point_dnw: point_fee: POINT Trading fee - point_refr: POINT Referrer rebate (optional)</param>
+        /// <param name="type">Change types: - dnw: Deposit and withdrawal - pnl: Profit and loss from position reduction - fee: Trading fees - refr: Referrer rebates - fund: Funding fees - point_dnw: Point card deposit and withdrawal - point_fee: Point card trading fees - point_refr: Point card referrer rebates (optional)</param>
         /// <returns>Task of List&lt;FuturesAccountBook&gt;</returns>
         public async Task<List<FuturesAccountBook>> ListDeliveryAccountBookAsync (string settle, int? limit = default(int?), long? from = default(long?), long? to = default(long?), string type = default(string))
         {
@@ -2856,7 +2856,7 @@ namespace Io.Gate.GateApi.Api
         /// <param name="limit">Maximum number of records returned in a single list (optional, default to 100)</param>
         /// <param name="from">Start timestamp  Specify start time, time format is Unix timestamp. If not specified, it defaults to (the data start time of the time range actually returned by to and limit) (optional)</param>
         /// <param name="to">Termination Timestamp  Specify the end time. If not specified, it defaults to the current time, and the time format is a Unix timestamp (optional)</param>
-        /// <param name="type">Changing Type: - dnw: Deposit &amp; Withdraw - pnl: Profit &amp; Loss by reducing position - fee: Trading fee - refr: Referrer rebate - fund: Funding - point_dnw: point_fee: POINT Trading fee - point_refr: POINT Referrer rebate (optional)</param>
+        /// <param name="type">Change types: - dnw: Deposit and withdrawal - pnl: Profit and loss from position reduction - fee: Trading fees - refr: Referrer rebates - fund: Funding fees - point_dnw: Point card deposit and withdrawal - point_fee: Point card trading fees - point_refr: Point card referrer rebates (optional)</param>
         /// <returns>Task of ApiResponse (List&lt;FuturesAccountBook&gt;)</returns>
         public async Task<ApiResponse<List<FuturesAccountBook>>> ListDeliveryAccountBookAsyncWithHttpInfo (string settle, int? limit = default(int?), long? from = default(long?), long? to = default(long?), string type = default(string))
         {
@@ -3607,7 +3607,7 @@ namespace Io.Gate.GateApi.Api
         /// <param name="contract">Futures contract (optional)</param>
         /// <param name="limit">Maximum number of records returned in a single list (optional, default to 100)</param>
         /// <param name="offset">List offset, starting from 0 (optional, default to 0)</param>
-        /// <param name="lastId">Specify the currency name to query in batches, and support up to 100 pass parameters at a time (optional)</param>
+        /// <param name="lastId">Use the ID of the last record in the previous list as the starting point for the next list  Operations based on custom IDs can only be checked when orders are pending. After orders are completed (filled/cancelled), they can be checked within 1 hour after completion. After expiration, only order IDs can be used (optional)</param>
         /// <param name="countTotal">Whether to return total number matched, defaults to 0 (no return) (optional, default to 0)</param>
         /// <returns>List&lt;FuturesOrder&gt;</returns>
         public List<FuturesOrder> ListDeliveryOrders (string settle, string status, string contract = default(string), int? limit = default(int?), int? offset = default(int?), string lastId = default(string), int? countTotal = default(int?))
@@ -3625,7 +3625,7 @@ namespace Io.Gate.GateApi.Api
         /// <param name="contract">Futures contract (optional)</param>
         /// <param name="limit">Maximum number of records returned in a single list (optional, default to 100)</param>
         /// <param name="offset">List offset, starting from 0 (optional, default to 0)</param>
-        /// <param name="lastId">Specify the currency name to query in batches, and support up to 100 pass parameters at a time (optional)</param>
+        /// <param name="lastId">Use the ID of the last record in the previous list as the starting point for the next list  Operations based on custom IDs can only be checked when orders are pending. After orders are completed (filled/cancelled), they can be checked within 1 hour after completion. After expiration, only order IDs can be used (optional)</param>
         /// <param name="countTotal">Whether to return total number matched, defaults to 0 (no return) (optional, default to 0)</param>
         /// <returns>ApiResponse of List&lt;FuturesOrder&gt;</returns>
         public ApiResponse<List<FuturesOrder>> ListDeliveryOrdersWithHttpInfo (string settle, string status, string contract = default(string), int? limit = default(int?), int? offset = default(int?), string lastId = default(string), int? countTotal = default(int?))
@@ -3701,7 +3701,7 @@ namespace Io.Gate.GateApi.Api
         /// <param name="contract">Futures contract (optional)</param>
         /// <param name="limit">Maximum number of records returned in a single list (optional, default to 100)</param>
         /// <param name="offset">List offset, starting from 0 (optional, default to 0)</param>
-        /// <param name="lastId">Specify the currency name to query in batches, and support up to 100 pass parameters at a time (optional)</param>
+        /// <param name="lastId">Use the ID of the last record in the previous list as the starting point for the next list  Operations based on custom IDs can only be checked when orders are pending. After orders are completed (filled/cancelled), they can be checked within 1 hour after completion. After expiration, only order IDs can be used (optional)</param>
         /// <param name="countTotal">Whether to return total number matched, defaults to 0 (no return) (optional, default to 0)</param>
         /// <returns>Task of List&lt;FuturesOrder&gt;</returns>
         public async Task<List<FuturesOrder>> ListDeliveryOrdersAsync (string settle, string status, string contract = default(string), int? limit = default(int?), int? offset = default(int?), string lastId = default(string), int? countTotal = default(int?))
@@ -3720,7 +3720,7 @@ namespace Io.Gate.GateApi.Api
         /// <param name="contract">Futures contract (optional)</param>
         /// <param name="limit">Maximum number of records returned in a single list (optional, default to 100)</param>
         /// <param name="offset">List offset, starting from 0 (optional, default to 0)</param>
-        /// <param name="lastId">Specify the currency name to query in batches, and support up to 100 pass parameters at a time (optional)</param>
+        /// <param name="lastId">Use the ID of the last record in the previous list as the starting point for the next list  Operations based on custom IDs can only be checked when orders are pending. After orders are completed (filled/cancelled), they can be checked within 1 hour after completion. After expiration, only order IDs can be used (optional)</param>
         /// <param name="countTotal">Whether to return total number matched, defaults to 0 (no return) (optional, default to 0)</param>
         /// <returns>Task of ApiResponse (List&lt;FuturesOrder&gt;)</returns>
         public async Task<ApiResponse<List<FuturesOrder>>> ListDeliveryOrdersAsyncWithHttpInfo (string settle, string status, string contract = default(string), int? limit = default(int?), int? offset = default(int?), string lastId = default(string), int? countTotal = default(int?))
@@ -4336,7 +4336,7 @@ namespace Io.Gate.GateApi.Api
         /// <param name="order">Futures order ID, return related data only if specified (optional)</param>
         /// <param name="limit">Maximum number of records returned in a single list (optional, default to 100)</param>
         /// <param name="offset">List offset, starting from 0 (optional, default to 0)</param>
-        /// <param name="lastId">Specify the currency name to query in batches, and support up to 100 pass parameters at a time (optional)</param>
+        /// <param name="lastId">Use the ID of the last record in the previous list as the starting point for the next list  Operations based on custom IDs can only be checked when orders are pending. After orders are completed (filled/cancelled), they can be checked within 1 hour after completion. After expiration, only order IDs can be used (optional)</param>
         /// <param name="countTotal">Whether to return total number matched, defaults to 0 (no return) (optional, default to 0)</param>
         /// <returns>List&lt;MyFuturesTrade&gt;</returns>
         public List<MyFuturesTrade> GetMyDeliveryTrades (string settle, string contract = default(string), long? order = default(long?), int? limit = default(int?), int? offset = default(int?), string lastId = default(string), int? countTotal = default(int?))
@@ -4354,7 +4354,7 @@ namespace Io.Gate.GateApi.Api
         /// <param name="order">Futures order ID, return related data only if specified (optional)</param>
         /// <param name="limit">Maximum number of records returned in a single list (optional, default to 100)</param>
         /// <param name="offset">List offset, starting from 0 (optional, default to 0)</param>
-        /// <param name="lastId">Specify the currency name to query in batches, and support up to 100 pass parameters at a time (optional)</param>
+        /// <param name="lastId">Use the ID of the last record in the previous list as the starting point for the next list  Operations based on custom IDs can only be checked when orders are pending. After orders are completed (filled/cancelled), they can be checked within 1 hour after completion. After expiration, only order IDs can be used (optional)</param>
         /// <param name="countTotal">Whether to return total number matched, defaults to 0 (no return) (optional, default to 0)</param>
         /// <returns>ApiResponse of List&lt;MyFuturesTrade&gt;</returns>
         public ApiResponse<List<MyFuturesTrade>> GetMyDeliveryTradesWithHttpInfo (string settle, string contract = default(string), long? order = default(long?), int? limit = default(int?), int? offset = default(int?), string lastId = default(string), int? countTotal = default(int?))
@@ -4429,7 +4429,7 @@ namespace Io.Gate.GateApi.Api
         /// <param name="order">Futures order ID, return related data only if specified (optional)</param>
         /// <param name="limit">Maximum number of records returned in a single list (optional, default to 100)</param>
         /// <param name="offset">List offset, starting from 0 (optional, default to 0)</param>
-        /// <param name="lastId">Specify the currency name to query in batches, and support up to 100 pass parameters at a time (optional)</param>
+        /// <param name="lastId">Use the ID of the last record in the previous list as the starting point for the next list  Operations based on custom IDs can only be checked when orders are pending. After orders are completed (filled/cancelled), they can be checked within 1 hour after completion. After expiration, only order IDs can be used (optional)</param>
         /// <param name="countTotal">Whether to return total number matched, defaults to 0 (no return) (optional, default to 0)</param>
         /// <returns>Task of List&lt;MyFuturesTrade&gt;</returns>
         public async Task<List<MyFuturesTrade>> GetMyDeliveryTradesAsync (string settle, string contract = default(string), long? order = default(long?), int? limit = default(int?), int? offset = default(int?), string lastId = default(string), int? countTotal = default(int?))
@@ -4448,7 +4448,7 @@ namespace Io.Gate.GateApi.Api
         /// <param name="order">Futures order ID, return related data only if specified (optional)</param>
         /// <param name="limit">Maximum number of records returned in a single list (optional, default to 100)</param>
         /// <param name="offset">List offset, starting from 0 (optional, default to 0)</param>
-        /// <param name="lastId">Specify the currency name to query in batches, and support up to 100 pass parameters at a time (optional)</param>
+        /// <param name="lastId">Use the ID of the last record in the previous list as the starting point for the next list  Operations based on custom IDs can only be checked when orders are pending. After orders are completed (filled/cancelled), they can be checked within 1 hour after completion. After expiration, only order IDs can be used (optional)</param>
         /// <param name="countTotal">Whether to return total number matched, defaults to 0 (no return) (optional, default to 0)</param>
         /// <returns>Task of ApiResponse (List&lt;MyFuturesTrade&gt;)</returns>
         public async Task<ApiResponse<List<MyFuturesTrade>>> GetMyDeliveryTradesAsyncWithHttpInfo (string settle, string contract = default(string), long? order = default(long?), int? limit = default(int?), int? offset = default(int?), string lastId = default(string), int? countTotal = default(int?))
@@ -4964,7 +4964,7 @@ namespace Io.Gate.GateApi.Api
         }
 
         /// <summary>
-        /// Query risk limit tiers When the &#39;contract&#39; parameter is not passed, the default is to query the risk limits for the top 100 markets.&#39;Limit&#39; and &#39;offset&#39; correspond to pagination queries at the market level, not to the length of the returned array. This only takes effect empty.
+        /// Query risk limit tiers When the &#39;contract&#39; parameter is not passed, the default is to query the risk limits for the top 100 markets. &#39;Limit&#39; and &#39;offset&#39; correspond to pagination queries at the market level, not to the length of the returned array. This only takes effect when the contract parameter is empty.
         /// </summary>
         /// <exception cref="Io.Gate.GateApi.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="settle">Settle currency</param>
@@ -4979,7 +4979,7 @@ namespace Io.Gate.GateApi.Api
         }
 
         /// <summary>
-        /// Query risk limit tiers When the &#39;contract&#39; parameter is not passed, the default is to query the risk limits for the top 100 markets.&#39;Limit&#39; and &#39;offset&#39; correspond to pagination queries at the market level, not to the length of the returned array. This only takes effect empty.
+        /// Query risk limit tiers When the &#39;contract&#39; parameter is not passed, the default is to query the risk limits for the top 100 markets. &#39;Limit&#39; and &#39;offset&#39; correspond to pagination queries at the market level, not to the length of the returned array. This only takes effect when the contract parameter is empty.
         /// </summary>
         /// <exception cref="Io.Gate.GateApi.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="settle">Settle currency</param>
@@ -5037,7 +5037,7 @@ namespace Io.Gate.GateApi.Api
         }
 
         /// <summary>
-        /// Query risk limit tiers When the &#39;contract&#39; parameter is not passed, the default is to query the risk limits for the top 100 markets.&#39;Limit&#39; and &#39;offset&#39; correspond to pagination queries at the market level, not to the length of the returned array. This only takes effect empty.
+        /// Query risk limit tiers When the &#39;contract&#39; parameter is not passed, the default is to query the risk limits for the top 100 markets. &#39;Limit&#39; and &#39;offset&#39; correspond to pagination queries at the market level, not to the length of the returned array. This only takes effect when the contract parameter is empty.
         /// </summary>
         /// <exception cref="Io.Gate.GateApi.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="settle">Settle currency</param>
@@ -5053,7 +5053,7 @@ namespace Io.Gate.GateApi.Api
         }
 
         /// <summary>
-        /// Query risk limit tiers When the &#39;contract&#39; parameter is not passed, the default is to query the risk limits for the top 100 markets.&#39;Limit&#39; and &#39;offset&#39; correspond to pagination queries at the market level, not to the length of the returned array. This only takes effect empty.
+        /// Query risk limit tiers When the &#39;contract&#39; parameter is not passed, the default is to query the risk limits for the top 100 markets. &#39;Limit&#39; and &#39;offset&#39; correspond to pagination queries at the market level, not to the length of the returned array. This only takes effect when the contract parameter is empty.
         /// </summary>
         /// <exception cref="Io.Gate.GateApi.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="settle">Settle currency</param>

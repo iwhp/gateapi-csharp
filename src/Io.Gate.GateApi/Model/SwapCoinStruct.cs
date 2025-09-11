@@ -38,11 +38,11 @@ namespace Io.Gate.GateApi.Model
         /// <param name="uid">User ID.</param>
         /// <param name="coin">Currency.</param>
         /// <param name="type">Type 0-Staking 1-Redemption.</param>
-        /// <param name="subtype">子类型.</param>
+        /// <param name="subtype">SubType.</param>
         /// <param name="amount">Amount.</param>
         /// <param name="exchangeRate">Exchange ratio.</param>
         /// <param name="exchangeAmount">Redemption Amount.</param>
-        /// <param name="updateStamp">更新时间戳.</param>
+        /// <param name="updateStamp">UpdateTimestamp.</param>
         /// <param name="createStamp">Transaction timestamp.</param>
         /// <param name="status">status 1-success.</param>
         /// <param name="protocolType">DEFI Protocol Type.</param>
@@ -103,9 +103,9 @@ namespace Io.Gate.GateApi.Model
         public int Type { get; set; }
 
         /// <summary>
-        /// 子类型
+        /// SubType
         /// </summary>
-        /// <value>子类型</value>
+        /// <value>SubType</value>
         [DataMember(Name="subtype")]
         public string Subtype { get; set; }
 
@@ -131,9 +131,9 @@ namespace Io.Gate.GateApi.Model
         public string ExchangeAmount { get; set; }
 
         /// <summary>
-        /// 更新时间戳
+        /// UpdateTimestamp
         /// </summary>
-        /// <value>更新时间戳</value>
+        /// <value>UpdateTimestamp</value>
         [DataMember(Name="updateStamp")]
         public int UpdateStamp { get; set; }
 

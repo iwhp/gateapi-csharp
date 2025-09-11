@@ -308,6 +308,13 @@ namespace Io.Gate.GateApi.Model
         public string AverageMaintenanceRate { get; private set; }
 
         /// <summary>
+        /// Sub-account position ID
+        /// </summary>
+        /// <value>Sub-account position ID</value>
+        [DataMember(Name="pid", EmitDefaultValue=false)]
+        public long Pid { get; private set; }
+
+        /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
         /// <returns>String presentation of the object</returns>
@@ -348,6 +355,7 @@ namespace Io.Gate.GateApi.Model
             sb.Append("  OpenTime: ").Append(OpenTime).Append("\n");
             sb.Append("  RiskLimitTable: ").Append(RiskLimitTable).Append("\n");
             sb.Append("  AverageMaintenanceRate: ").Append(AverageMaintenanceRate).Append("\n");
+            sb.Append("  Pid: ").Append(Pid).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -538,6 +546,10 @@ namespace Io.Gate.GateApi.Model
                     this.AverageMaintenanceRate == input.AverageMaintenanceRate ||
                     (this.AverageMaintenanceRate != null &&
                     this.AverageMaintenanceRate.Equals(input.AverageMaintenanceRate))
+                ) && 
+                (
+                    this.Pid == input.Pid ||
+                    this.Pid.Equals(input.Pid)
                 );
         }
 
@@ -608,6 +620,7 @@ namespace Io.Gate.GateApi.Model
                     hashCode = hashCode * 59 + this.RiskLimitTable.GetHashCode();
                 if (this.AverageMaintenanceRate != null)
                     hashCode = hashCode * 59 + this.AverageMaintenanceRate.GetHashCode();
+                hashCode = hashCode * 59 + this.Pid.GetHashCode();
                 return hashCode;
             }
         }

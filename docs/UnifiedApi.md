@@ -17,7 +17,7 @@ Method | HTTP request | Description
 [**GetUnifiedMode**](UnifiedApi.md#getunifiedmode) | **GET** /unified/unified_mode | Query mode of the unified account
 [**SetUnifiedMode**](UnifiedApi.md#setunifiedmode) | **PUT** /unified/unified_mode | Set unified account mode
 [**GetUnifiedEstimateRate**](UnifiedApi.md#getunifiedestimaterate) | **GET** /unified/estimate_rate | Query unified account estimated interest rate
-[**ListCurrencyDiscountTiers**](UnifiedApi.md#listcurrencydiscounttiers) | **GET** /unified/currency_discount_tiers | Query unified account tiered discount
+[**ListCurrencyDiscountTiers**](UnifiedApi.md#listcurrencydiscounttiers) | **GET** /unified/currency_discount_tiers | Query unified account tiered
 [**ListLoanMarginTiers**](UnifiedApi.md#listloanmargintiers) | **GET** /unified/loan_margin_tiers | Query unified account tiered loan margin
 [**CalculatePortfolioMargin**](UnifiedApi.md#calculateportfoliomargin) | **POST** /unified/portfolio_calculator | Portfolio margin calculator
 [**GetUserLeverageCurrencyConfig**](UnifiedApi.md#getuserleveragecurrencyconfig) | **GET** /unified/leverage/user_currency_config | Maximum and minimum currency leverage that can be set
@@ -982,7 +982,7 @@ Name | Type | Description  | Notes
 # **ListCurrencyDiscountTiers**
 > List&lt;UnifiedDiscount&gt; ListCurrencyDiscountTiers ()
 
-Query unified account tiered discount
+Query unified account tiered
 
 ### Example
 ```csharp
@@ -1004,7 +1004,7 @@ namespace Example
 
             try
             {
-                // Query unified account tiered discount
+                // Query unified account tiered
                 List<UnifiedDiscount> result = apiInstance.ListCurrencyDiscountTiers();
                 Debug.WriteLine(result);
             }
