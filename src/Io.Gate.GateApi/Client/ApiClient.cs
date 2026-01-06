@@ -9,18 +9,14 @@
 
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Runtime.Serialization;
-using System.Runtime.Serialization.Formatters;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using RestSharp;
@@ -111,7 +107,7 @@ namespace Io.Gate.GateApi.Client
 
             if (type.Name.StartsWith("System.Nullable`1[[System.DateTime")) // return a datetime object
             {
-                return DateTime.Parse(response.Content,  null, System.Globalization.DateTimeStyles.RoundtripKind);
+                return DateTime.Parse(response.Content, null, System.Globalization.DateTimeStyles.RoundtripKind);
             }
 
             if (type == typeof(String) || type.Name.StartsWith("System.Nullable")) // return primitive type
@@ -382,7 +378,7 @@ namespace Io.Gate.GateApi.Client
 
         private ApiResponse<T> ToApiResponse<T>(RestResponse response, IReadableConfiguration configuration)
         {
-            T result = default(T);
+            T result = default;
             if (response != null)
             {
                 var codec = new CustomJsonCodec(configuration);
@@ -450,7 +446,7 @@ namespace Io.Gate.GateApi.Client
 
             if (response.Cookies != null && response.Cookies.Count > 0)
             {
-                if(result.Cookies == null) result.Cookies = new List<Cookie>();
+                if (result.Cookies == null) result.Cookies = new List<Cookie>();
                 foreach (var restResponseCookie in response.Cookies.OfType<Cookie>())
                 {
                     var cookie = new Cookie(
@@ -506,7 +502,7 @@ namespace Io.Gate.GateApi.Client
 
             if (response.Cookies != null && response.Cookies.Count > 0)
             {
-                if(result.Cookies == null) result.Cookies = new List<Cookie>();
+                if (result.Cookies == null) result.Cookies = new List<Cookie>();
                 foreach (var restResponseCookie in response.Cookies.OfType<Cookie>())
                 {
                     var cookie = new Cookie(
