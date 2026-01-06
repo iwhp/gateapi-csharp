@@ -24,7 +24,6 @@ using System.Text;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using RestSharp;
-using RestSharp.Deserializers;
 using RestSharpMethod = RestSharp.Method;
 
 namespace Io.Gate.GateApi.Client
@@ -32,10 +31,9 @@ namespace Io.Gate.GateApi.Client
     /// <summary>
     /// Allows RestSharp to Serialize/Deserialize JSON using our custom logic, but only when ContentType is JSON.
     /// </summary>
-    internal class CustomJsonCodec : RestSharp.Serializers.ISerializer, RestSharp.Deserializers.IDeserializer
+    internal class CustomJsonCodec
     {
         private readonly IReadableConfiguration _configuration;
-        private static readonly string _contentType = "application/json";
         private readonly JsonSerializerSettings _serializerSettings = new JsonSerializerSettings
         {
             NullValueHandling = NullValueHandling.Ignore,
@@ -67,9 +65,9 @@ namespace Io.Gate.GateApi.Client
             return result;
         }
 
-        public T Deserialize<T>(IRestResponse response)
+        public T Deserialize<T>(RestResponse response)
         {
-            var result = (T) Deserialize(response, typeof(T));
+            var result = (T)Deserialize(response, typeof(T));
             return result;
         }
 
@@ -79,7 +77,7 @@ namespace Io.Gate.GateApi.Client
         /// <param name="response">The HTTP response.</param>
         /// <param name="type">Object type.</param>
         /// <returns>Object representation of the JSON string.</returns>
-        internal object Deserialize(IRestResponse response, Type type)
+        internal object Deserialize(RestResponse response, Type type)
         {
             var headers = response.Headers;
             if (type == typeof(byte[])) // return byte array
@@ -131,16 +129,6 @@ namespace Io.Gate.GateApi.Client
                 throw new ApiException(500, e.Message);
             }
         }
-
-        public string RootElement { get; set; }
-        public string Namespace { get; set; }
-        public string DateFormat { get; set; }
-
-        public string ContentType
-        {
-            get { return _contentType; }
-            set { throw new InvalidOperationException("Not allowed to set content type."); }
-        }
     }
     /// <summary>
     /// Provides a default implementation of an Api client (both synchronous and asynchronous implementations),
@@ -154,14 +142,14 @@ namespace Io.Gate.GateApi.Client
         /// Allows for extending request processing for <see cref="ApiClient"/> generated code.
         /// </summary>
         /// <param name="request">The RestSharp request object</param>
-        partial void InterceptRequest(IRestRequest request);
+        partial void InterceptRequest(RestRequest request);
 
         /// <summary>
         /// Allows for extending response processing for <see cref="ApiClient"/> generated code.
         /// </summary>
         /// <param name="request">The RestSharp request object</param>
         /// <param name="response">The RestSharp response object</param>
-        partial void InterceptResponse(IRestRequest request, IRestResponse response);
+        partial void InterceptResponse(RestRequest request, RestResponse response);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ApiClient" />, defaulting to the global configurations' base url.
@@ -196,31 +184,92 @@ namespace Io.Gate.GateApi.Client
             switch (method)
             {
                 case HttpMethod.Get:
-                    other = RestSharpMethod.GET;
+                    other = RestSharpMethod.Get;
                     break;
                 case HttpMethod.Post:
-                    other = RestSharpMethod.POST;
+                    other = RestSharpMethod.Post;
                     break;
                 case HttpMethod.Put:
-                    other = RestSharpMethod.PUT;
+                    other = RestSharpMethod.Put;
                     break;
                 case HttpMethod.Delete:
-                    other = RestSharpMethod.DELETE;
+                    other = RestSharpMethod.Delete;
                     break;
                 case HttpMethod.Head:
-                    other = RestSharpMethod.HEAD;
+                    other = RestSharpMethod.Head;
                     break;
                 case HttpMethod.Options:
-                    other = RestSharpMethod.OPTIONS;
+                    other = RestSharpMethod.Options;
                     break;
                 case HttpMethod.Patch:
-                    other = RestSharpMethod.PATCH;
+                    other = RestSharpMethod.Patch;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException("method", method, null);
             }
 
             return other;
+        }
+
+        private static string BuildQueryString(Multimap<string, string> queryParameters)
+        {
+            if (queryParameters == null || queryParameters.Count == 0)
+            {
+                return string.Empty;
+            }
+
+            var encoded = new List<string>();
+            foreach (var queryParam in queryParameters)
+            {
+                foreach (var value in queryParam.Value)
+                {
+                    encoded.Add($"{Uri.EscapeDataString(queryParam.Key)}={Uri.EscapeDataString(value)}");
+                }
+            }
+
+            return string.Join("&", encoded);
+        }
+
+        private static string ResolvePath(string path, RequestOptions options)
+        {
+            if (options?.PathParameters == null)
+            {
+                return path;
+            }
+
+            foreach (var pathParam in options.PathParameters)
+            {
+                path = path.Replace("{" + pathParam.Key + "}", Uri.EscapeDataString(pathParam.Value));
+            }
+
+            return path;
+        }
+
+        private void ApplyApiV4Auth(RestRequest request, RequestOptions options, IReadableConfiguration configuration, string serializedBody, string resolvedPath, string queryString)
+        {
+            if (!options.RequireApiV4Auth)
+            {
+                return;
+            }
+
+            request.AddOrUpdateHeader("KEY", configuration.ApiV4Key);
+            long timestamp = DateTimeOffset.Now.ToUnixTimeSeconds();
+            request.AddOrUpdateHeader("Timestamp", timestamp.ToString());
+
+            using (SHA512 sha512Hash = SHA512.Create())
+            {
+                var sourceBytes = Encoding.UTF8.GetBytes(serializedBody ?? string.Empty);
+                var hashBytes = sha512Hash.ComputeHash(sourceBytes);
+                var bodyHash = BitConverter.ToString(hashBytes).Replace("-", "").ToLowerInvariant();
+
+                var signatureString = $"{request.Method.ToString().ToUpperInvariant()}\n{resolvedPath}\n{queryString}\n{bodyHash}\n{timestamp}";
+
+                using (HMACSHA512 hmac = new HMACSHA512(Encoding.UTF8.GetBytes(configuration.ApiV4Secret)))
+                {
+                    var signature = hmac.ComputeHash(Encoding.UTF8.GetBytes(signatureString));
+                    request.AddOrUpdateHeader("SIGN", BitConverter.ToString(signature).Replace("-", "").ToLowerInvariant());
+                }
+            }
         }
 
         /// <summary>
@@ -245,11 +294,7 @@ namespace Io.Gate.GateApi.Client
             if (options == null) throw new ArgumentNullException("options");
             if (configuration == null) throw new ArgumentNullException("configuration");
 
-            RestRequest request = new RestRequest(Method(method))
-            {
-                Resource = path,
-                JsonSerializer = new CustomJsonCodec(configuration)
-            };
+            RestRequest request = new RestRequest(path, Method(method));
 
             if (options.PathParameters != null)
             {
@@ -289,6 +334,7 @@ namespace Io.Gate.GateApi.Client
                 }
             }
 
+            string serializedBody = null;
             if (options.FormParameters != null)
             {
                 foreach (var formParam in options.FormParameters)
@@ -299,25 +345,12 @@ namespace Io.Gate.GateApi.Client
 
             if (options.Data != null)
             {
-                if (options.HeaderParameters != null)
+                serializedBody = JsonConvert.SerializeObject(options.Data, new JsonSerializerSettings
                 {
-                    var contentTypes = options.HeaderParameters["Content-Type"];
-                    if (contentTypes == null || contentTypes.Any(header => header.Contains("application/json")))
-                    {
-                        request.RequestFormat = DataFormat.Json;
-                    }
-                    else
-                    {
-                        // TODO: Generated client user should add additional handlers. RestSharp only supports XML and JSON, with XML as default.
-                    }
-                }
-                else
-                {
-                    // Here, we'll assume JSON APIs are more common. XML can be forced by adding produces/consumes to openapi spec explicitly.
-                    request.RequestFormat = DataFormat.Json;
-                }
-
-                request.AddJsonBody(options.Data);
+                    NullValueHandling = NullValueHandling.Ignore,
+                    ConstructorHandling = ConstructorHandling.AllowNonPublicDefaultConstructor
+                });
+                request.AddStringBody(serializedBody, DataFormat.Json);
             }
 
             if (options.FileParameters != null)
@@ -326,9 +359,9 @@ namespace Io.Gate.GateApi.Client
                 {
                     var bytes = ClientUtils.ReadAsBytes(fileParam.Value);
                     if (fileParam.Value is FileStream fileStream)
-                        request.Files.Add(FileParameter.Create(fileParam.Key, bytes, Path.GetFileName(fileStream.Name)));
+                        request.AddFile(fileParam.Key, bytes, Path.GetFileName(fileStream.Name));
                     else
-                        request.Files.Add(FileParameter.Create(fileParam.Key, bytes, "no_file_name_provided"));
+                        request.AddFile(fileParam.Key, bytes, "no_file_name_provided");
                 }
             }
 
@@ -336,52 +369,34 @@ namespace Io.Gate.GateApi.Client
             {
                 foreach (var cookie in options.Cookies)
                 {
-                    request.AddCookie(cookie.Name, cookie.Value);
+                    request.AddCookie(cookie.Name, cookie.Value, cookie.Path ?? "/", cookie.Domain ?? string.Empty);
                 }
             }
 
-            if (options.RequireApiV4Auth)
-            {
-                request.OnBeforeRequest = http =>
-                {
-                    http.Headers.Add(new HttpHeader{Name = "KEY", Value = configuration.ApiV4Key});
-                    long timestamp = DateTimeOffset.Now.ToUnixTimeSeconds();
-                    http.Headers.Add(new HttpHeader{Name = "Timestamp", Value = timestamp.ToString()});
-                    using (SHA512 sha512Hash = SHA512.Create())
-                    {
-                        var sourceBytes = Encoding.UTF8.GetBytes(http.RequestBody ?? "");
-                        var hashBytes = sha512Hash.ComputeHash(sourceBytes);
-                        var bodyHash = BitConverter.ToString(hashBytes).Replace("-", "").ToLowerInvariant();
-                        var queryString = string.IsNullOrEmpty(http.Url.Query) ? "" : http.Url.Query.Substring(1);
-                        var signatureString = $"{request.Method}\n{http.Url.AbsolutePath}\n{queryString}\n{bodyHash}\n{timestamp}";
-
-                        using (HMACSHA512 hmac = new HMACSHA512(Encoding.UTF8.GetBytes(configuration.ApiV4Secret)))
-                        {
-                            var signature = hmac.ComputeHash(Encoding.UTF8.GetBytes(signatureString));
-                            http.Headers.Add(new HttpHeader{
-                                Name = "SIGN",
-                                Value = BitConverter.ToString(signature).Replace("-", "").ToLowerInvariant()
-                            });
-                        }
-                    }
-                };
-            }
+            var resolvedPath = ResolvePath(path, options);
+            var queryString = BuildQueryString(options.QueryParameters);
+            ApplyApiV4Auth(request, options, configuration, serializedBody, resolvedPath, queryString);
 
             return request;
         }
 
-        private ApiResponse<T> ToApiResponse<T>(IRestResponse<T> response)
+        private ApiResponse<T> ToApiResponse<T>(RestResponse response, IReadableConfiguration configuration)
         {
-            T result = response.Data;
-            string rawContent = response.Content;
-
-            var transformed = new ApiResponse<T>(response.StatusCode, new Multimap<string, string>(), result, rawContent)
+            T result = default(T);
+            if (response != null)
             {
-                ErrorText = response.ErrorMessage,
+                var codec = new CustomJsonCodec(configuration);
+                result = (T)codec.Deserialize(response, typeof(T));
+            }
+            string rawContent = response?.Content;
+
+            var transformed = new ApiResponse<T>(response != null ? response.StatusCode : 0, new Multimap<string, string>(), result, rawContent)
+            {
+                ErrorText = response?.ErrorMessage,
                 Cookies = new List<Cookie>()
             };
 
-            if (response.Headers != null)
+            if (response?.Headers != null)
             {
                 foreach (var responseHeader in response.Headers)
                 {
@@ -389,9 +404,9 @@ namespace Io.Gate.GateApi.Client
                 }
             }
 
-            if (response.Cookies != null)
+            if (response?.Cookies != null)
             {
-                foreach (var responseCookies in response.Cookies)
+                foreach (var responseCookies in response.Cookies.OfType<Cookie>())
                 {
                     transformed.Cookies.Add(
                         new Cookie(
@@ -408,57 +423,26 @@ namespace Io.Gate.GateApi.Client
 
         private ApiResponse<T> Exec<T>(RestRequest req, IReadableConfiguration configuration)
         {
-            RestClient client = new RestClient(_baseUrl);
-
-            client.ClearHandlers();
-            if (req.JsonSerializer is IDeserializer existingDeserializer)
+            var clientOptions = new RestClientOptions(_baseUrl)
             {
-                client.AddHandler("application/json", () => existingDeserializer);
-                client.AddHandler("text/json", () => existingDeserializer);
-                client.AddHandler("text/x-json", () => existingDeserializer);
-                client.AddHandler("text/javascript", () => existingDeserializer);
-                client.AddHandler("*+json", () => existingDeserializer);
-            }
-            else
+                Timeout = TimeSpan.FromMilliseconds(configuration.Timeout),
+                Proxy = configuration.Proxy,
+                ClientCertificates = configuration.ClientCertificates
+            };
+            RestClient client = new RestClient(clientOptions);
+
+            if (!string.IsNullOrEmpty(configuration.UserAgent))
             {
-                var customDeserializer = new CustomJsonCodec(configuration);
-                client.AddHandler("application/json", () => customDeserializer);
-                client.AddHandler("text/json", () => customDeserializer);
-                client.AddHandler("text/x-json", () => customDeserializer);
-                client.AddHandler("text/javascript", () => customDeserializer);
-                client.AddHandler("*+json", () => customDeserializer);
-            }
-
-            var xmlDeserializer = new XmlDeserializer();
-            client.AddHandler("application/xml", () => xmlDeserializer);
-            client.AddHandler("text/xml", () => xmlDeserializer);
-            client.AddHandler("*+xml", () => xmlDeserializer);
-            client.AddHandler("*", () => xmlDeserializer);
-
-            client.Timeout = configuration.Timeout;
-
-            if (configuration.UserAgent != null)
-            {
-                client.UserAgent = configuration.UserAgent;
-            }
-
-            if (configuration.ClientCertificates != null)
-            {
-                client.ClientCertificates = configuration.ClientCertificates;
-            }
-
-            if (configuration.Proxy != null)
-            {
-                client.Proxy = configuration.Proxy;
+                client.AddDefaultHeader("User-Agent", configuration.UserAgent);
             }
 
             InterceptRequest(req);
 
-            var response = client.Execute<T>(req);
+            var response = client.Execute(req);
 
             InterceptResponse(req, response);
 
-            var result = ToApiResponse(response);
+            var result = ToApiResponse<T>(response, configuration);
             if (response.ErrorMessage != null)
             {
                 result.ErrorText = response.ErrorMessage;
@@ -467,7 +451,7 @@ namespace Io.Gate.GateApi.Client
             if (response.Cookies != null && response.Cookies.Count > 0)
             {
                 if(result.Cookies == null) result.Cookies = new List<Cookie>();
-                foreach (var restResponseCookie in response.Cookies)
+                foreach (var restResponseCookie in response.Cookies.OfType<Cookie>())
                 {
                     var cookie = new Cookie(
                         restResponseCookie.Name,
@@ -495,58 +479,26 @@ namespace Io.Gate.GateApi.Client
 
         private async Task<ApiResponse<T>> ExecAsync<T>(RestRequest req, IReadableConfiguration configuration)
         {
-            RestClient client = new RestClient(_baseUrl);
-
-            client.ClearHandlers();
-            var existingDeserializer = req.JsonSerializer as IDeserializer;
-            if (existingDeserializer != null)
+            var clientOptions = new RestClientOptions(_baseUrl)
             {
-                client.AddHandler("application/json", () => existingDeserializer);
-                client.AddHandler("text/json", () => existingDeserializer);
-                client.AddHandler("text/x-json", () => existingDeserializer);
-                client.AddHandler("text/javascript", () => existingDeserializer);
-                client.AddHandler("*+json", () => existingDeserializer);
-            }
-            else
+                Timeout = TimeSpan.FromMilliseconds(configuration.Timeout),
+                Proxy = configuration.Proxy,
+                ClientCertificates = configuration.ClientCertificates
+            };
+            RestClient client = new RestClient(clientOptions);
+
+            if (!string.IsNullOrEmpty(configuration.UserAgent))
             {
-                var customDeserializer = new CustomJsonCodec(configuration);
-                client.AddHandler("application/json", () => customDeserializer);
-                client.AddHandler("text/json", () => customDeserializer);
-                client.AddHandler("text/x-json", () => customDeserializer);
-                client.AddHandler("text/javascript", () => customDeserializer);
-                client.AddHandler("*+json", () => customDeserializer);
-            }
-
-            var xmlDeserializer = new XmlDeserializer();
-            client.AddHandler("application/xml", () => xmlDeserializer);
-            client.AddHandler("text/xml", () => xmlDeserializer);
-            client.AddHandler("*+xml", () => xmlDeserializer);
-            client.AddHandler("*", () => xmlDeserializer);
-
-            client.Timeout = configuration.Timeout;
-
-            if (configuration.UserAgent != null)
-            {
-                client.UserAgent = configuration.UserAgent;
-            }
-
-            if (configuration.ClientCertificates != null)
-            {
-                client.ClientCertificates = configuration.ClientCertificates;
-            }
-
-            if (configuration.Proxy != null)
-            {
-                client.Proxy = configuration.Proxy;
+                client.AddDefaultHeader("User-Agent", configuration.UserAgent);
             }
 
             InterceptRequest(req);
 
-            var response = await client.ExecuteAsync<T>(req);
+            var response = await client.ExecuteAsync(req);
 
             InterceptResponse(req, response);
 
-            var result = ToApiResponse(response);
+            var result = ToApiResponse<T>(response, configuration);
             if (response.ErrorMessage != null)
             {
                 result.ErrorText = response.ErrorMessage;
@@ -555,7 +507,7 @@ namespace Io.Gate.GateApi.Client
             if (response.Cookies != null && response.Cookies.Count > 0)
             {
                 if(result.Cookies == null) result.Cookies = new List<Cookie>();
-                foreach (var restResponseCookie in response.Cookies)
+                foreach (var restResponseCookie in response.Cookies.OfType<Cookie>())
                 {
                     var cookie = new Cookie(
                         restResponseCookie.Name,
