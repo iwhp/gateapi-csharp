@@ -215,6 +215,34 @@ Gate.io enforces API rate limits. If you run integration tests frequently, you m
 
 ---
 
+## After Upstream Sync
+
+The SDK (`src/Io.Gate.GateApi/`) is auto-generated from an OpenAPI spec using [OpenAPI Generator](https://openapi-generator.tech). When syncing from upstream (`git rebase upstream/master`), the generated code may have changed. Run this verification sequence:
+
+1. `dotnet build Io.Gate.GateApi.sln` — if this fails, constructor signatures or API method signatures changed
+2. `dotnet test --filter "TestCategory=Unit"` — if this fails after build succeeds, behavioral contracts changed (JSON format, enum values, auth algorithm)
+3. `dotnet test --filter "TestCategory=Integration"` — if this fails, real API response format changed
+
+### Common fixes after upstream sync
+
+| Symptom | Likely cause | Fix |
+|---------|-------------|-----|
+| Build error in `TestDataFactory` | Model constructor changed | Update factory method signature |
+| Build error in API tests | API method got new required param | Add parameter to test call |
+| Build error: type not found | Model/API class renamed or removed | Update or remove test |
+| JSON round-trip test fails | Property renamed or enum value changed | Update test JSON and assertions |
+| Integration test fails | API response structure changed | Update assertions |
+
+### Why tests survive regeneration
+
+- **Separate project**: Tests live in `Io.Gate.GateApi.Tests`, never touched by the generator
+- **`.openapi-generator-ignore`**: Explicitly protects the test project and solution file
+- **Factory pattern**: All model construction goes through `TestDataFactory` — constructor changes only need fixing in one place
+- **Behavioral focus**: Tests verify contracts (serialization, auth, routing), not implementation details
+- **`TestedSdkVersion`** in `TestDataFactory`: Records which SDK version tests were validated against
+
+---
+
 ## Known Limitations
 
 - **Private method testing**: `ApplyApiV4Auth`, `BuildQueryString`, and `ResolvePath` are private methods tested via `System.Reflection`. This is fragile if method signatures change.

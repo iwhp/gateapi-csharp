@@ -6,6 +6,12 @@ namespace Io.Gate.GateApi.Tests.Helpers;
 
 public static class TestDataFactory
 {
+    /// <summary>
+    /// SDK version these tests were written/validated against.
+    /// Update after verifying tests pass on a new upstream version.
+    /// </summary>
+    public const string TestedSdkVersion = "7.105.8";
+
     public static Configuration CreateTestConfiguration()
     {
         var config = new Configuration();

@@ -11,7 +11,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="MSTest" Version="3.*" />
+    <PackageReference Include="MSTest" Version="4.1.0" />
     <PackageReference Include="Moq" Version="4.*" />
     <PackageReference Include="coverlet.collector" Version="6.*">
       <PrivateAssets>all</PrivateAssets>

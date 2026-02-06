@@ -1,0 +1,8 @@
+# OpenAPI Generator Ignore
+# Lines matching these patterns will not be overwritten by the generator.
+
+# Test project — hand-written, not generated
+src/Io.Gate.GateApi.Tests/**
+
+# Solution file — modified to include test project
+Io.Gate.GateApi.sln
